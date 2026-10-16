@@ -79,7 +79,7 @@ docs/                         controls mapping, getting started, GKE guide, deci
 
 ## Getting started
 
-Full walkthrough: **[docs/getting-started.md](docs/getting-started.md)**. In short:
+First-time AWS deployment, command by command: **[docs/TF-init-deployment.md](docs/TF-init-deployment.md)**. After the cluster is up (GitOps, CI, sample app): **[docs/getting-started.md](docs/getting-started.md)**. In short:
 
 ```bash
 # 1. One-time foundation (local state, then migrate it into the bucket it creates)
@@ -87,6 +87,7 @@ terraform -chdir=terraform/bootstrap init && terraform -chdir=terraform/bootstra
 
 # 2. Fill terraform/envs/dev/backend.tf and terraform.tfvars (see .example)
 terraform -chdir=terraform/envs/dev init
+terraform -chdir=terraform/envs/dev apply -target=module.network -target=module.eks   # first run only
 terraform -chdir=terraform/envs/dev apply
 
 # 3. Watch Argo CD bring the platform up

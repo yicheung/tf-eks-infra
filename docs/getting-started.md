@@ -1,5 +1,7 @@
 # Getting started (EKS)
 
+> For the exact first-time commands (bootstrap, state migration, tfvars values, the two-pass first apply, and troubleshooting), follow **[TF-init-deployment.md](TF-init-deployment.md)**. This page gives the overview and covers what comes after.
+
 ## Prerequisites
 
 - Terraform ≥ 1.10 (S3-native state locking), AWS CLI v2, kubectl
@@ -19,7 +21,7 @@ This creates the KMS-encrypted, TLS-only state bucket, the GitHub OIDC provider,
 - **plan**: read-only, usable from PRs
 - **apply**: only from the protected `dev` GitHub Environment
 
-Then move bootstrap's own state into the bucket. Uncomment the `backend "s3"` block in `versions.tf`, fill in the bucket name, and run:
+Then move bootstrap's own state into the bucket. Write a `backend.tf` that points at it (exact commands in [TF-init-deployment.md](TF-init-deployment.md#2-move-bootstraps-state-into-the-bucket-it-just-created)) and run:
 
 ```bash
 terraform init -migrate-state
@@ -37,6 +39,7 @@ terraform init -migrate-state
 ```bash
 cd terraform/envs/dev
 terraform init
+terraform apply -target=module.network -target=module.eks   # first run only: cluster before Helm
 terraform apply
 ```
 

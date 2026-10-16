@@ -8,9 +8,10 @@ terraform {
     }
   }
 
-  # Bootstrap starts with local state. After the first apply, uncomment this
-  # block and run `terraform init -migrate-state` to move it into the bucket
-  # it just created.
+  # Bootstrap starts with local state. After the first apply, either uncomment
+  # this block or (as docs/TF-init-deployment.md does) put the same block in a
+  # separate backend.tf, then run `terraform init -migrate-state` to move the
+  # state into the bucket it just created. Only one backend block may exist.
   # backend "s3" {
   #   bucket       = "<state_bucket_name output>"
   #   key          = "bootstrap/terraform.tfstate"
