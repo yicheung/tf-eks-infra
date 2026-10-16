@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app-sample
+  labels:
+    # Workload isolation: Pod Security Admission, restricted profile
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+    # Marks a tenant namespace: Kyverno generates default-deny NetworkPolicies,
+    # the shared Gateway accepts its routes, and ESO lets it read cloud secrets.
+    platform.security/tenant: "true"

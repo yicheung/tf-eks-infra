@@ -1,0 +1,90 @@
+{{- $v := .Values -}}
+{{- $isEks := eq $v.cloud "eks" -}}
+
+{{/* ---------------- wave 0: controllers with CRDs ---------------- */}}
+
+{{ include "platform.helmApp" (dict "root" $ "name" "cert-manager" "namespace" "cert-manager" "wave" "0" "chart" $v.charts.certManager) }}
+---
+{{ include "platform.helmApp" (dict "root" $ "name" "external-secrets" "namespace" "external-secrets" "wave" "0" "chart" $v.charts.externalSecrets) }}
+---
+{{ include "platform.helmApp" (dict "root" $ "name" "kyverno" "namespace" "kyverno" "wave" "0" "chart" $v.charts.kyverno) }}
+---
+{{- if $isEks }}
+{{ include "platform.helmApp" (dict "root" $ "name" "aws-load-balancer-controller" "namespace" "kube-system" "wave" "0" "chart" $v.charts.awsLoadBalancerController
+     "inline" (dict "clusterName" $v.clusterName "region" $v.region "vpcId" $v.vpcId)) }}
+---
+{{- end }}
+
+{{/* ---------------- wave 1: runtime detection ---------------- */}}
+
+{{- $falcoInline := dict -}}
+{{- if and $isEks $v.alerts.snsTopicArn }}
+{{- $falcoInline = dict "falcosidekick" (dict "config" (dict "aws" (dict "region" $v.region "sns" (dict "topicarn" $v.alerts.snsTopicArn "minimumpriority" "error")))) -}}
+{{- end }}
+{{ include "platform.helmApp" (dict "root" $ "name" "falco" "namespace" "falco" "wave" "1" "chart" $v.charts.falco "inline" $falcoInline
+     "managedNamespaceMetadata" (dict "labels" (dict "pod-security.kubernetes.io/enforce" "privileged"))) }}
+---
+
+{{/* ---------------- wave 2: cluster policy and config ---------------- */}}
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: policies
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  source:
+    repoURL: {{ $v.repoURL }}
+    targetRevision: {{ $v.targetRevision }}
+    path: policies/kyverno
+    helm:
+      valuesObject:
+        systemNamespaces:
+          {{- toYaml $v.systemNamespaces | nindent 10 }}
+        registry:
+          {{- toYaml $v.registry | nindent 10 }}
+        signer:
+          {{- toYaml $v.signer | nindent 10 }}
+        {{- if $isEks }}
+        imageCredentialProviders: [amazon]
+        {{- end }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kyverno
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+---
+
+{{/* ---------------- wave 3: workloads ---------------- */}}
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-app
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: workloads
+  source:
+    repoURL: {{ $v.repoURL }}
+    targetRevision: {{ $v.targetRevision }}
+    path: workloads/sample/overlays/{{ $v.cloud }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: app-sample
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

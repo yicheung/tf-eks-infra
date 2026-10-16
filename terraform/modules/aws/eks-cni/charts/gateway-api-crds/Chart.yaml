@@ -1,0 +1,8 @@
+apiVersion: v2
+name: gateway-api-crds
+description: >-
+  Kubernetes Gateway API CRDs (standard channel), vendored so Terraform can
+  install them before Cilium. Update with scripts/update-gateway-api-crds.sh.
+type: application
+version: 1.6.3
+appVersion: v1.6.3

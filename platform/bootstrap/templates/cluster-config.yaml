@@ -1,0 +1,62 @@
+{{- $v := .Values -}}
+{{- /*
+Cluster-scoped config that depends on controllers from wave 0. Rendered by the
+root app directly; SkipDryRunOnMissingResource lets the first sync succeed
+before the CRDs exist.
+*/ -}}
+
+# Lock down Argo CD's built-in "default" project so nothing can deploy through it.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: default
+  namespace: argocd
+spec:
+  sourceRepos: []
+  destinations: []
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist: []
+---
+{{- if eq $v.cloud "eks" }}
+# Secrets come from AWS Secrets Manager. Credentials: EKS Pod Identity on the
+# ESO controller (no auth block = default AWS credential chain).
+apiVersion: external-secrets.io/v1
+kind: ClusterSecretStore
+metadata:
+  name: cloud-secrets
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  provider:
+    aws:
+      service: SecretsManager
+      region: {{ $v.region }}
+  conditions:
+    # Only app namespaces may read cloud secrets.
+    - namespaceSelector:
+        matchLabels:
+          platform.security/tenant: "true"
+---
+{{- if $v.dns.route53Zone }}
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  acme:
+    server: {{ ternary "https://acme-staging-v02.api.letsencrypt.org/directory" "https://acme-v02.api.letsencrypt.org/directory" $v.dns.acmeStaging }}
+    email: {{ required "dns.acmeEmail is required when dns.route53Zone is set" $v.dns.acmeEmail }}
+    privateKeySecretRef:
+      name: letsencrypt-account-key
+    solvers:
+      - dns01:
+          route53:
+            region: {{ $v.region }}
+            hostedZoneID: {{ $v.dns.route53Zone }}
+---
+{{- end }}
+{{- end }}

@@ -1,0 +1,23 @@
+# Copy to terraform.tfvars (git-ignored) and fill in.
+
+region            = "us-east-1"
+github_repository = "yicheung/tf-eks-infra"
+
+# From `terraform -chdir=terraform/bootstrap output`
+github_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com"
+
+# Who can reach the public API endpoint. Use your egress IP /32. [] = private only.
+api_public_access_cidrs = ["203.0.113.10/32"]
+
+# Must include the identity that runs Terraform.
+cluster_admin_principal_arns = [
+  "arn:aws:iam::123456789012:role/tf-eks-infra-terraform-apply",
+  "arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AdministratorAccess_abc123",
+]
+
+security_alert_emails = ["you@example.com"]
+
+# Optional: public TLS for the sample app
+# domain          = "dev.example.com"
+# route53_zone_id = "Z0123456789ABCDEFGHIJ"
+# acme_email      = "you@example.com"

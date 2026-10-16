@@ -1,0 +1,34 @@
+# Enforce or just report. Start a new cluster on [Deny]; switch a single policy
+# to [Audit] with a PolicyException rather than weakening it globally.
+validationActions: [Deny]
+
+# Namespaces these policies skip (platform components). Injected from
+# platform/bootstrap/values.yaml.
+systemNamespaces:
+  - default
+  - kube-system
+  - kube-public
+  - kube-node-lease
+  - argocd
+  - cert-manager
+  - external-secrets
+  - kyverno
+  - gateway-system
+  - falco
+
+# Only this registry/prefix is allowed for workload images, and images in it
+# must be signed by `signer`.
+registry:
+  host: ""
+  prefix: ""
+
+signer:
+  issuer: https://token.actions.githubusercontent.com
+  subjectRegExp: ""
+
+# Registry credential helpers Kyverno uses to fetch signatures ([amazon] on EKS,
+# [google] on GKE).
+imageCredentialProviders: []
+
+# Label that marks an application ("tenant") namespace.
+tenantLabel: platform.security/tenant

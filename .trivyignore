@@ -1,0 +1,3 @@
+# Trivy misconfiguration IDs to accept. Each entry needs a justification and
+# should be revisited. Example:
+# AVD-AWS-0104  # egress to 0.0.0.0/0 on node SG: required for NAT egress; filtered by Cilium policy

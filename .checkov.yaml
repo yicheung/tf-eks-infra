@@ -1,0 +1,25 @@
+# Checkov runs in CI (.github/workflows/terraform.yml). Every skip needs a reason.
+download-external-modules: false
+skip-check:
+  # Registry modules are pinned by semver, not commit hash.
+  - CKV_TF_1
+  # KMS key policies: Resource "*" in a key policy means "this key". The
+  # statements are scoped by principal (account root / one AWS service).
+  - CKV_AWS_109
+  - CKV_AWS_111
+  - CKV_AWS_356
+  # Terraform state bucket: versioned + KMS + TLS-only is the control set we
+  # want; access logging, event notifications and cross-region replication
+  # are left to your org's logging account / DR strategy.
+  - CKV_AWS_18
+  - CKV_AWS_144
+  - CKV2_AWS_62
+  # False positive: the endpoint SG is attached through the vpc-endpoints module.
+  - CKV2_AWS_5
+  # GuardDuty org-wide delegation is an AWS Organizations decision, out of scope.
+  - CKV2_AWS_3
+  # AZs are selected by count from the available list; fine for this stack.
+  - CKV_AWS_394
+  # KNOWN GAP: the bootstrap apply role starts with AdministratorAccess.
+  # Replace with a scoped policy + permissions boundary (docs/security-controls.md).
+  - CKV_AWS_274

@@ -1,0 +1,12 @@
+# Provisions NLBs for Cilium's Gateway Services. Only Services annotated with
+# aws-load-balancer-type: external are handled (no mutating webhook on every
+# LoadBalancer Service).
+replicaCount: 2
+
+serviceAccount:
+  name: aws-load-balancer-controller
+
+enableServiceMutatorWebhook: false
+
+podDisruptionBudget:
+  maxUnavailable: 1

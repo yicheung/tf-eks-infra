@@ -1,0 +1,7 @@
+# Falcosidekick -> SNS (the same topic GuardDuty findings go to). Topic ARN
+# and region are injected by platform/bootstrap from Terraform outputs.
+# AWS credentials: EKS Pod Identity for falco/falco-falcosidekick
+# (terraform/envs/*: workload_identity.falcosidekick).
+falcosidekick:
+  serviceAccount:
+    name: falco-falcosidekick

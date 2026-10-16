@@ -1,0 +1,18 @@
+installCRDs: true
+replicaCount: 2
+
+serviceAccount:
+  name: external-secrets
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+# Only ClusterSecretStores and SecretStores we define; no PushSecret to the cloud.
+processPushSecret: false
+
+webhook:
+  replicaCount: 2
+
+certController:
+  replicaCount: 1

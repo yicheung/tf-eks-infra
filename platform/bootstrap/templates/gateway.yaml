@@ -1,0 +1,106 @@
+{{- $v := .Values -}}
+{{- $tls := and $v.dns.domain $v.dns.route53Zone -}}
+{{- /*
+Shared north-south Gateway owned by the platform. Application namespaces
+attach HTTPRoutes to it; they never create their own load balancers.
+Cloud-specific: gatewayClassName and load balancer annotations.
+*/ -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gateway-system
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+---
+{{- if $tls }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard
+  namespace: gateway-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  secretName: wildcard-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  dnsNames:
+    - {{ $v.dns.domain | quote }}
+    - {{ printf "*.%s" $v.dns.domain | quote }}
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+---
+{{- end }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: shared
+  namespace: gateway-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  {{- if eq $v.cloud "eks" }}
+  gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      # Provisioned by the AWS Load Balancer Controller as an NLB that targets
+      # pod IPs directly.
+      service.beta.kubernetes.io/aws-load-balancer-type: external
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+      service.beta.kubernetes.io/aws-load-balancer-attributes: deletion_protection.enabled=false
+  {{- else }}
+  gatewayClassName: gke-l7-global-external-managed
+  {{- end }}
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              platform.security/tenant: "true"
+    {{- if $tls }}
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: {{ printf "*.%s" $v.dns.domain | quote }}
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: wildcard-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              platform.security/tenant: "true"
+    {{- end }}
+{{- if $tls }}
+---
+# With TLS on, plain HTTP only redirects to HTTPS.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: http-to-https
+  namespace: gateway-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  parentRefs:
+    - name: shared
+      sectionName: http
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301
+{{- end }}

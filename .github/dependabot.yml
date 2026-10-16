@@ -1,0 +1,35 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: docker
+    directory: /app/sample
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: gomod
+    directory: /app/sample
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: terraform
+    directories:
+      - /terraform/bootstrap
+      - /terraform/envs/*
+      - /terraform/modules/aws/*
+      - /terraform/modules/platform-bootstrap
+    schedule:
+      interval: weekly
+    groups:
+      terraform:
+        patterns: ["*"]
+
+# Helm chart versions live in platform/bootstrap/values.yaml and the Terraform
+# helm_release resources; Dependabot can't track those. Use Renovate's
+# helm-values + regex managers if you want automated bumps for them.

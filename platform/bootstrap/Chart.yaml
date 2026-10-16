@@ -1,0 +1,7 @@
+apiVersion: v2
+name: platform-bootstrap
+description: >-
+  Root app-of-apps. Renders one Argo CD Application per platform component,
+  choosing cloud-specific value files and components from `.Values.cloud`.
+type: application
+version: 0.1.0

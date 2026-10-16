@@ -1,0 +1,7 @@
+apiVersion: v2
+name: platform-policies
+description: >-
+  Admission policies for workload namespaces, written as Kyverno CEL policies
+  (policies.kyverno.io/v1). ClusterPolicy is deprecated as of Kyverno 1.17.
+type: application
+version: 0.1.0

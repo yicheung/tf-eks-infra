@@ -1,0 +1,5 @@
+# EKS: credentials come from EKS Pod Identity bound to the cert-manager
+# ServiceAccount (terraform/envs/*: workload_identity.cert-manager).
+# No annotations needed. GKE would set
+#   serviceAccount.annotations."iam.gke.io/gcp-service-account" here.
+{}

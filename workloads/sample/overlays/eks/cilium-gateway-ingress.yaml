@@ -1,0 +1,20 @@
+# Cilium's Gateway proxies traffic through its per-node Envoy, which shows up
+# with the reserved "ingress" identity. A plain NetworkPolicy cannot select
+# it, so this Cilium policy is the EKS-specific half of "allow only from the
+# Gateway". (On GKE this becomes a NetworkPolicy allowing the proxy-only
+# subnet and Google health-check ranges.)
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: sample-app-from-gateway
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: sample-app
+  ingress:
+    - fromEntities:
+        - ingress
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP

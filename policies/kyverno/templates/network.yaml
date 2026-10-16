@@ -1,0 +1,88 @@
+# Network segmentation. Every tenant namespace gets default-deny ingress AND
+# egress the moment it is created, plus DNS egress so pods can resolve names.
+# Teams then add narrow allow policies next to their workloads.
+---
+apiVersion: policies.kyverno.io/v1
+kind: GeneratingPolicy
+metadata:
+  name: tenant-default-deny
+  annotations:
+    policies.kyverno.io/title: Default-deny NetworkPolicy for tenant namespaces
+    policies.kyverno.io/category: Network Segmentation
+spec:
+  evaluation:
+    synchronize:
+      enabled: true
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [namespaces]
+  matchConditions:
+    - name: is-tenant
+      expression: >-
+        object.metadata.?labels[?'{{ .Values.tenantLabel }}'].orValue('') == 'true'
+  variables:
+    - name: targetNs
+      expression: object.metadata.name
+    - name: downstream
+      expression: >-
+        [
+          {
+            "kind": dyn("NetworkPolicy"),
+            "apiVersion": dyn("networking.k8s.io/v1"),
+            "metadata": dyn({"name": "default-deny-all"}),
+            "spec": dyn({
+              "podSelector": dyn({}),
+              "policyTypes": dyn(["Ingress", "Egress"])
+            })
+          },
+          {
+            "kind": dyn("NetworkPolicy"),
+            "apiVersion": dyn("networking.k8s.io/v1"),
+            "metadata": dyn({"name": "allow-dns-egress"}),
+            "spec": dyn({
+              "podSelector": dyn({}),
+              "policyTypes": dyn(["Egress"]),
+              "egress": dyn([{
+                "to": [{
+                  "namespaceSelector": {"matchLabels": {"kubernetes.io/metadata.name": "kube-system"}},
+                  "podSelector": {"matchLabels": {"k8s-app": "kube-dns"}}
+                }],
+                "ports": [{"protocol": "UDP", "port": 53}, {"protocol": "TCP", "port": 53}]
+              }])
+            })
+          }
+        ]
+  generate:
+    - expression: generator.Apply(variables.targetNs, variables.downstream)
+---
+# Exposure goes through the shared Gateway only: no NodePort/LoadBalancer
+# Services or externalIPs in tenant namespaces.
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: restrict-service-exposure
+  annotations:
+    policies.kyverno.io/title: No NodePort/LoadBalancer Services in tenant namespaces
+    policies.kyverno.io/category: Network Segmentation
+    policies.kyverno.io/severity: medium
+spec:
+  validationActions: {{ toYaml .Values.validationActions | nindent 4 }}
+  matchConstraints:
+    namespaceSelector:
+      matchLabels:
+        {{ .Values.tenantLabel }}: "true"
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [services]
+  validations:
+    - expression: >-
+        !(object.spec.?type.orValue('ClusterIP') in ['NodePort', 'LoadBalancer'])
+      message: Expose workloads through an HTTPRoute on the shared Gateway, not NodePort/LoadBalancer Services.
+    - expression: >-
+        size(object.spec.?externalIPs.orValue([])) == 0
+      message: externalIPs are not allowed.

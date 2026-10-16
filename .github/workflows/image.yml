@@ -1,0 +1,147 @@
+name: image
+
+# Build -> test -> scan -> push (immutable tag) -> sign (keyless) -> SBOM +
+# provenance attestations -> PR that pins the new digest in the EKS overlay.
+# The cosign identity of this workflow on main is exactly what the Kyverno
+# ImageValidatingPolicy trusts (policies/kyverno/templates/supply-chain.yaml).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/sample/**"
+      - ".github/workflows/image.yml"
+  pull_request:
+    paths:
+      - "app/sample/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+env:
+  IMAGE_NAME: tf-eks-infra/sample-app
+  CONTEXT: app/sample
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # push the digest-bump branch
+      pull-requests: write   # open the PR
+      id-token: write        # AWS OIDC + Sigstore keyless signing
+      attestations: write    # GitHub build provenance
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: app/sample/go.mod
+
+      - name: Vet and test
+        working-directory: app/sample
+        run: |
+          go vet ./...
+          go test ./...
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build for scanning
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: ${{ env.CONTEXT }}
+          load: true
+          push: false
+          tags: local/sample-app:scan
+          cache-to: type=gha,mode=max
+
+      - name: Trivy vulnerability scan (fail on fixable HIGH/CRITICAL)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: local/sample-app:scan
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+
+      # ----- Everything below only runs on main -----------------------------
+      - name: AWS credentials (OIDC, push-only role)
+        if: github.event_name != 'pull_request'
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_IMAGE_PUSH_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: ECR login
+        if: github.event_name != 'pull_request'
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@03f1aad4c6c7ffd436567f42f9384779290529bd # v2.1.7
+
+      - name: Push (immutable tag)
+        if: github.event_name != 'pull_request'
+        id: push
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: ${{ env.CONTEXT }}
+          push: true
+          tags: ${{ steps.ecr.outputs.registry }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          cache-from: type=gha
+          provenance: false
+          sbom: false
+
+      - name: SBOM (SPDX)
+        if: github.event_name != 'pull_request'
+        uses: anchore/sbom-action@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
+        with:
+          image: ${{ steps.ecr.outputs.registry }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
+          format: spdx-json
+          output-file: sbom.spdx.json
+          upload-artifact: true
+
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+        if: github.event_name != 'pull_request'
+
+      - name: Sign image and attach SBOM attestation (keyless)
+        if: github.event_name != 'pull_request'
+        env:
+          REF: ${{ steps.ecr.outputs.registry }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
+        run: |
+          cosign sign --yes "$REF"
+          cosign attest --yes --type spdxjson --predicate sbom.spdx.json "$REF"
+
+      - name: SLSA build provenance
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-name: ${{ steps.ecr.outputs.registry }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Open PR pinning the new digest
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW_NAME: ${{ steps.ecr.outputs.registry }}/${{ env.IMAGE_NAME }}
+          DIGEST: ${{ steps.push.outputs.digest }}
+        run: |
+          set -euo pipefail
+          file=workloads/sample/overlays/eks/kustomization.yaml
+          branch="bump/sample-app-${GITHUB_SHA::7}"
+          python3 - "$file" "$NEW_NAME" "$DIGEST" <<'PY'
+          import re, sys
+          path, name, digest = sys.argv[1:]
+          text = open(path).read()
+          text, n1 = re.subn(r"(- name: sample-app\n\s+newName: ).*", r"\g<1>" + name, text)
+          text, n2 = re.subn(r"(\n\s+digest: )sha256:[0-9a-f]+", r"\g<1>" + digest, text)
+          if (n1, n2) != (1, 1):
+              sys.exit(f"expected one newName and one digest, got {n1}, {n2}")
+          open(path, "w").write(text)
+          PY
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add "$file"
+          git commit -m "chore(sample-app): deploy ${DIGEST:0:19}"
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Deploy sample-app ${DIGEST:0:19}" \
+            --body "Built, scanned, signed and attested by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}."

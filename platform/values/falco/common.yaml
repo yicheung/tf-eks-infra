@@ -1,0 +1,55 @@
+driver:
+  enabled: true
+  # Explicit driver: no kernel module, no build step, and no `auto` detection
+  # that rewrites config (which Argo CD would see as drift).
+  kind: modern_ebpf
+
+collectors:
+  kubernetes:
+    enabled: true
+
+# Load rules from the falcosecurity rules artifact, pinned to the chart's default.
+falcoctl:
+  artifact:
+    install:
+      enabled: true
+    follow:
+      enabled: true
+
+falco:
+  json_output: true
+  json_include_output_property: true
+  priority: notice
+  # Custom rules for this platform; add your own in this file.
+  rules_files:
+    - /etc/falco/falco_rules.yaml
+    - /etc/falco/falco-incubating_rules.yaml
+    - /etc/falco/rules.d
+
+customRules:
+  platform-rules.yaml: |-
+    - list: platform_namespaces
+      items: [kube-system, argocd, cert-manager, external-secrets, kyverno, falco]
+
+    - rule: Shell in application container
+      desc: An interactive shell started in a container outside platform namespaces.
+      condition: >
+        spawned_process and container and shell_procs and proc.tty != 0
+        and not k8s.ns.name in (platform_namespaces)
+      output: >
+        Shell in app container (user=%user.name ns=%k8s.ns.name pod=%k8s.pod.name
+        container=%container.name cmdline=%proc.cmdline image=%container.image.repository)
+      priority: ERROR
+      tags: [container, shell, mitre_execution, platform]
+
+# Ship every alert to Falcosidekick for routing (SNS on EKS; see eks.yaml).
+falcosidekick:
+  enabled: true
+  replicaCount: 2
+  webui:
+    enabled: false
+  config:
+    debug: false
+
+metrics:
+  enabled: true

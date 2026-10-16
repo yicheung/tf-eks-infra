@@ -1,0 +1,70 @@
+# Defaults. Terraform (modules/platform-bootstrap) overrides these with the
+# real cluster values via the root Application's helm.valuesObject.
+
+cloud: eks            # eks | gke
+clusterName: ""
+region: ""
+accountId: ""         # AWS only
+vpcId: ""             # AWS only
+projectId: ""         # GCP only
+
+repoURL: ""
+targetRevision: main
+
+registry:
+  host: ""            # e.g. 123456789012.dkr.ecr.us-east-1.amazonaws.com
+  prefix: tf-eks-infra
+
+signer:
+  issuer: https://token.actions.githubusercontent.com
+  subjectRegExp: ""
+
+dns:
+  domain: null
+  route53Zone: null
+  acmeEmail: null
+  acmeStaging: true
+  secretPrefix: ""
+
+alerts:
+  snsTopicArn: ""
+
+# Pinned chart versions. Bump through PRs (Renovate/Dependabot can track these).
+charts:
+  certManager:
+    repo: https://charts.jetstack.io
+    chart: cert-manager
+    version: v1.21.2
+  externalSecrets:
+    repo: https://charts.external-secrets.io
+    chart: external-secrets
+    version: 2.12.0
+  kyverno:
+    repo: https://kyverno.github.io/kyverno
+    chart: kyverno
+    version: 3.9.1
+  falco:
+    repo: https://falcosecurity.github.io/charts
+    chart: falco
+    version: 9.2.0
+  awsLoadBalancerController:
+    repo: https://aws.github.io/eks-charts
+    chart: aws-load-balancer-controller
+    version: 3.6.0
+
+# Namespaces exempt from workload policies (platform components that need
+# privileges, e.g. Falco's eBPF probe or the CNI).
+systemNamespaces:
+  - default
+  - kube-system
+  - kube-public
+  - kube-node-lease
+  - argocd
+  - cert-manager
+  - external-secrets
+  - kyverno
+  - gateway-system
+  - falco
+  - amazon-cloudwatch
+  - amazon-guardduty
+  - cilium-secrets

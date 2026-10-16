@@ -1,0 +1,26 @@
+crds:
+  enabled: true
+  keep: true
+
+replicaCount: 2
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+serviceAccount:
+  name: cert-manager
+
+# Required for Gateway API (HTTPRoute/Gateway) certificate support.
+config:
+  apiVersion: controller.config.cert-manager.io/v1alpha1
+  kind: ControllerConfiguration
+  enableGatewayAPI: true
+
+webhook:
+  replicaCount: 2
+
+cainjector:
+  replicaCount: 2
+
+prometheus:
+  enabled: false

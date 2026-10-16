@@ -1,0 +1,64 @@
+# Workload isolation. Pod Security Admission "restricted" (enforced per
+# namespace by label) covers non-root, no privilege escalation, dropped
+# capabilities and seccomp. These policies add what PSA does not check, and
+# make sure tenant namespaces actually carry the PSA label.
+---
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: tenant-namespace-psa-restricted
+  annotations:
+    policies.kyverno.io/title: Tenant namespaces enforce PSA restricted
+    policies.kyverno.io/category: Workload Isolation
+    policies.kyverno.io/severity: high
+spec:
+  validationActions: {{ toYaml .Values.validationActions | nindent 4 }}
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [namespaces]
+  matchConditions:
+    - name: not-system-namespace
+      expression: >-
+        !(object.metadata.name in {{ toJson .Values.systemNamespaces }})
+  validations:
+    - expression: >-
+        object.metadata.?labels[?'pod-security.kubernetes.io/enforce'].orValue('') == 'restricted'
+      message: >-
+        Non-system namespaces must set pod-security.kubernetes.io/enforce=restricted.
+    - expression: >-
+        object.metadata.?labels[?'{{ .Values.tenantLabel }}'].orValue('') == 'true'
+      message: >-
+        Non-system namespaces must carry {{ .Values.tenantLabel }}=true (it scopes
+        default-deny networking and cloud secret access).
+---
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: require-hardened-containers
+  annotations:
+    policies.kyverno.io/title: Read-only root filesystem, resource limits, no default ServiceAccount
+    policies.kyverno.io/category: Workload Isolation
+    policies.kyverno.io/severity: medium
+spec:
+  validationActions: {{ toYaml .Values.validationActions | nindent 4 }}
+  {{- include "policies.podMatch" . | nindent 2 }}
+  variables:
+    {{- include "policies.allContainersVar" . | nindent 4 }}
+  validations:
+    - expression: >-
+        object.spec.containers.all(c, c.?securityContext.?readOnlyRootFilesystem.orValue(false) == true)
+      message: Containers must set securityContext.readOnlyRootFilesystem=true (use emptyDir for scratch space).
+    - expression: >-
+        object.spec.containers.all(c,
+          has(c.resources) && has(c.resources.requests) && has(c.resources.limits)
+          && 'memory' in c.resources.limits && 'cpu' in c.resources.requests && 'memory' in c.resources.requests)
+      message: Containers must set CPU/memory requests and a memory limit.
+    - expression: >-
+        object.spec.?serviceAccountName.orValue('default') != 'default'
+      message: Pods must run under a dedicated ServiceAccount, not "default".
+    - expression: >-
+        !object.spec.?hostNetwork.orValue(false) && !object.spec.?hostPID.orValue(false) && !object.spec.?hostIPC.orValue(false)
+      message: Host namespaces are not allowed.
