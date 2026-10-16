@@ -7,6 +7,26 @@ Each control is listed with the file that enforces it and the guidance it maps t
 - **NSA**: NSA/CISA Kubernetes Hardening Guide
 - **800-190**: NIST SP 800-190, Application Container Security Guide
 
+## Coverage summary
+
+Status of the five pillars. All controls are implemented in code and have passed static validation (`terraform validate`, tflint, Checkov, Trivy, kubeconform, Kyverno CLI). **They have not yet been verified on a live cluster.** Items marked *(new)* were found in the 2026-10-16 coverage review.
+
+| Pillar | Status | In place | Still open |
+|---|---|---|---|
+| **Workload identity** | ✅ Covered | One IAM role per ServiceAccount via EKS Pod Identity, no static keys. IMDSv2 hop limit 1, so pods can't use the node role. No token automount. EKS access entries. CI uses GitHub OIDC. | CI apply role still has AdministratorAccess. Argo CD SSO not configured. |
+| **Supply chain & image hardening** | ✅ Covered | ECR: immutable tags, KMS, continuous scanning. CI: Trivy gate, SBOM, keyless cosign, SLSA provenance. Kyverno admits only signed, digest-pinned images from our registry. | Base images not digest-pinned. Kyverno vs cosign v3 signature format untested. *(new)* Platform component images (Falco, Kyverno, ESO, …) skip signature and digest checks because their namespaces are exempt. |
+| **Workload isolation** | ✅ Covered (tenant namespaces) | PSA `restricted`, read-only root FS, resource limits, dedicated SAs, no host namespaces. Bottlerocket nodes. KMS-encrypted Secrets. Argo CD AppProjects fence tenants. | *(new)* Tenant and platform pods share one node group (no taints or separate pools). *(new)* No per-namespace ResourceQuota/LimitRange. *(new)* No Kubernetes RBAC model for tenant teams. No sandboxed runtime (gVisor/Kata). |
+| **Network segmentation** | ✅ Covered | Private subnets, no node public IPs, restricted API endpoint, VPC endpoints, flow logs. Cilium with WireGuard. Generated default-deny per tenant namespace. Single shared Gateway with TLS; no tenant LoadBalancer/NodePort Services. | *(new)* Tenants can create an allow-all NetworkPolicy that undoes default-deny. *(new)* No FQDN egress allow-listing: allowed egress can reach any internet host. No WAF. No workload-authenticated mTLS (WireGuard encrypts node-to-node only). |
+| **Runtime detection & logging** | ✅ Covered | Control-plane and audit logs (KMS, 365 days). GuardDuty EKS audit + Runtime Monitoring. Falco → Falcosidekick → SNS, shared with GuardDuty findings. Container logs to CloudWatch. Hubble metrics. | No Prometheus/Grafana, so Falco and Hubble metrics aren't scraped. Hubble flow logs not exported or retained. CloudTrail / Security Hub are org-level and out of scope. |
+
+**Recommended next fixes, in priority order** (all doable before the first apply):
+
+1. Block allow-all NetworkPolicies from tenants (Kyverno ValidatingPolicy).
+2. FQDN egress allow-lists with CiliumNetworkPolicy `toFQDNs`.
+3. Pin platform component images by digest, and verify signatures where upstream signs them.
+4. Generate a ResourceQuota and LimitRange with each tenant namespace, alongside default-deny.
+5. Split nodes into `platform` and `workloads` node groups with taints and nodeSelectors.
+
 ## 1. Workload identity
 
 | Control | Where | Maps to |
@@ -83,3 +103,11 @@ These are deliberate next steps, not oversights:
 6. **Argo CD SSO** isn't wired up yet. The local admin user stays enabled until `configs.cm.oidc.config` is set.
 7. **Metrics stack** (Prometheus/Grafana) isn't included. Hubble and Falco expose metrics ready to scrape.
 8. **Org-level controls** (GuardDuty delegated admin, Security Hub, CloudTrail org trail, SCPs) belong in an AWS Organizations repo.
+9. **Tenant NetworkPolicy guardrail.** Nothing stops a tenant from adding an allow-all NetworkPolicy that cancels default-deny. Add a Kyverno policy that rejects empty-selector or `0.0.0.0/0` ingress and egress rules in tenant namespaces.
+10. **Egress allow-listing.** Default-deny blocks egress, but any egress a tenant does allow can reach any host. Use CiliumNetworkPolicy `toFQDNs` (with DNS proxy) to name allowed external hosts.
+11. **Platform images aren't verified.** System namespaces are exempt from the registry, digest and signature policies. Pin chart images by digest, and add a separate ImageValidatingPolicy for upstream images that are signed (e.g. Kyverno, cert-manager, Cilium).
+12. **No per-namespace quotas.** Generate a ResourceQuota and LimitRange with each tenant namespace, alongside the default-deny NetworkPolicies.
+13. **Shared nodes.** Platform and tenant pods run on one node group. Split into `platform` and `workloads` node groups with taints and nodeSelectors, so a compromised tenant pod can't land next to Argo CD or Kyverno.
+14. **Tenant RBAC.** Team access is only fenced through Argo CD AppProjects. Define Kubernetes Roles/RoleBindings (or EKS access-entry namespace scopes) for direct `kubectl` access.
+15. **No runtime sandbox** (gVisor/Kata) for untrusted workloads.
+16. **Hubble flow logs** aren't exported or retained (metrics only). Enable the Hubble exporter and ship flows to CloudWatch or S3.

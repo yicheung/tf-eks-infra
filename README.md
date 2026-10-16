@@ -10,7 +10,7 @@ A secure Kubernetes reference platform on **AWS EKS**, built with **Terraform** 
 | **Network segmentation** | Private subnets, no node public IPs, VPC endpoints, flow logs; restricted API endpoint; Cilium (eBPF, kube-proxy replacement) with WireGuard; auto-generated default-deny NetworkPolicies; one shared Gateway as the only way in |
 | **Runtime detection & logging** | EKS control-plane + audit logs (KMS, 365 days); GuardDuty EKS audit + Runtime Monitoring; Falco (modern eBPF) → Falcosidekick; both alert to one SNS topic; Hubble flow metrics; container logs via CloudWatch Observability |
 
-See **[docs/security-controls.md](docs/security-controls.md)** for the full control-by-control mapping to CIS EKS, the NSA/CISA hardening guide and NIST SP 800-190.
+See **[docs/security-controls.md](docs/security-controls.md)** for the [coverage matrix](docs/security-controls.md#coverage-summary) and the full control-by-control mapping to CIS EKS, the NSA/CISA hardening guide and NIST SP 800-190.
 
 ## Architecture
 
