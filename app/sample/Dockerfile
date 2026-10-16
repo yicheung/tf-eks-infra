@@ -2,7 +2,7 @@
 # Pin both base images by digest (Dependabot keeps the digests current):
 #   docker buildx imagetools inspect golang:1.26-alpine --format '{{json .Manifest.Digest}}'
 
-FROM golang:1.26-alpine AS build
+FROM golang:1.27-alpine AS build
 WORKDIR /src
 COPY go.mod ./
 COPY *.go ./
