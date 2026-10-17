@@ -110,6 +110,7 @@ cluster_admin_principal_arns = [
 ]
 
 security_alert_emails = ["you@example.com"]
+platform_alert_emails = ["you@example.com"]   # Alertmanager (operational) alerts
 ```
 
 > **Don't skip this:** `cluster_admin_principal_arns` must include the role you're running Terraform as. There's no automatic creator-admin, so leaving it out locks Terraform out of the cluster it just created. Use the IAM role ARN (`arn:aws:iam::…:role/aws-reserved/…`), not the `arn:aws:sts::…:assumed-role/…` ARN that `get-caller-identity` prints.
@@ -129,7 +130,7 @@ terraform apply                                               # ~10-15 min
 | Pass | Creates |
 |---|---|
 | 1 | VPC, subnets, NAT, VPC endpoints, flow logs; EKS control plane, KMS secrets encryption, control-plane logs, access entries, Pod Identity agent, Bottlerocket node group |
-| 2 | Gateway API CRDs, Cilium, CoreDNS; Pod Identity roles; ECR + CI push role; GuardDuty, SNS alerts, CloudWatch Observability; Argo CD + root Application |
+| 2 | Gateway API CRDs, Cilium, CoreDNS; Pod Identity roles; ECR + CI push role; GuardDuty, SNS alerts, CloudWatch Observability; EBS CSI driver + KMS key; platform-alerts SNS + Alertmanager role; Argo CD + root Application |
 
 Expected along the way:
 - Terraform warns that `-target` gives a partial apply. Pass 2 completes it.
@@ -156,7 +157,15 @@ kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath='{.data.password}' | base64 -d; echo   # user: admin
 ```
 
-Confirm the SNS subscription email that `security_alert_emails` receives. Alerts aren't delivered until you do.
+Grafana, Prometheus and Alertmanager (details in [monitoring.md](monitoring.md)):
+
+```bash
+$(terraform output -raw grafana_ui_command)          # then open http://localhost:3000
+kubectl -n monitoring get secret grafana-admin \
+  -o jsonpath='{.data.admin-password}' | base64 -d; echo   # user: admin
+```
+
+Confirm the SNS subscription emails that `security_alert_emails` and `platform_alert_emails` receive. Alerts aren't delivered until you do.
 
 ## 6. Hand over to CI
 
@@ -187,7 +196,7 @@ Create the `dev` Environment under **Settings -> Environments** and add required
 
 ## Cost and teardown
 
-While running, expect roughly **$10-15/day**: EKS control plane, a NAT gateway, interface endpoints in 3 AZs, 2x `m7i.large`, GuardDuty and Inspector.
+While running, expect roughly **$10-15/day** (plus about $0.20/day for the monitoring volumes): EKS control plane, a NAT gateway, interface endpoints in 3 AZs, 2x `m7i.large`, GuardDuty and Inspector.
 
 ```bash
 cd terraform/envs/dev

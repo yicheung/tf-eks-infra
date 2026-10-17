@@ -22,5 +22,8 @@ webhook:
 cainjector:
   replicaCount: 2
 
+# Metrics + ServiceMonitor (Prometheus Operator CRDs are installed in sync wave -1).
 prometheus:
-  enabled: false
+  enabled: true
+  servicemonitor:
+    enabled: true

@@ -47,3 +47,21 @@ Short ADRs. Each one records the choice, why it was made, and what it costs.
 - **Choice:** `BOTTLEROCKET_x86_64` managed node groups, no SSH.
 - **Why:** Minimal, immutable, SELinux-enforcing OS with atomic updates. A smaller attack surface than AL2023 for nodes that only run containers.
 - **Cost:** No package manager on the host. Debug through the admin container over SSM.
+
+## 008: Self-hosted kube-prometheus-stack, CRDs installed first
+
+- **Choice:** kube-prometheus-stack via Argo CD, with the Prometheus Operator CRDs in a separate app at sync wave -1 and `crds.enabled: false` in the stack.
+- **Why:**
+  - Every other chart (Kyverno, Falco, cert-manager, ESO) can ship its own ServiceMonitor without ordering hacks.
+  - Components installed by Terraform before the CRDs exist (Cilium, Argo CD) get PodMonitors/ServiceMonitors from GitOps instead.
+  - Self-hosted keeps the stack cloud-neutral for GKE.
+- **Cost:**
+  - The CRD chart version must track the operator version in kube-prometheus-stack.
+  - Single replicas and local retention: production needs HA plus Thanos or Amazon Managed Service for Prometheus.
+
+## 009: Separate SNS topics for security and operational alerts
+
+- **Choice:** GuardDuty and Falcosidekick publish to `<cluster>-security-alerts`; Alertmanager publishes to `<cluster>-platform-alerts`.
+- **Why:** Security findings shouldn't be buried in capacity and availability noise, and the two usually go to different people.
+- **Cost:** Two subscriptions to manage (`security_alert_emails`, `platform_alert_emails`).
+

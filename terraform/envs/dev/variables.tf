@@ -132,6 +132,12 @@ variable "security_alert_emails" {
   default     = []
 }
 
+variable "platform_alert_emails" {
+  description = "Emails for operational alerts from Alertmanager (separate from security alerts)."
+  type        = list(string)
+  default     = []
+}
+
 # --- Ingress / TLS -------------------------------------------------------------------------
 variable "domain" {
   description = "Base domain for public hostnames (e.g. dev.example.com). Leave null to skip TLS issuance."

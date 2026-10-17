@@ -16,6 +16,7 @@ cluster_admin_principal_arns = [
 ]
 
 security_alert_emails = ["you@example.com"]
+platform_alert_emails = ["you@example.com"]   # Alertmanager (operational) alerts
 
 # Optional: public TLS for the sample app
 # domain          = "dev.example.com"

@@ -1,0 +1,239 @@
+{{- $v := .Values -}}
+{{- /*
+Monitoring plumbing owned by the platform (not by any one chart):
+  - the monitoring namespace and the encrypted default StorageClass
+  - the Grafana admin credential, generated in-cluster by ESO
+  - scrape configs for components installed by Terraform (Cilium, Argo CD)
+  - security-focused alert rules that tie the five pillars to Alertmanager
+*/ -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+  labels:
+    # node-exporter needs hostNetwork/hostPID/hostPath; everything else in the
+    # stack runs non-root. Kyverno workload policies skip this namespace.
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/warn: baseline
+---
+{{- if eq $v.cloud "eks" }}
+# Default StorageClass: gp3, encrypted with the customer-managed key from
+# terraform/modules/aws/storage.
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gp3-encrypted
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp3
+  encrypted: "true"
+  {{- with $v.storage.kmsKeyArn }}
+  kmsKeyId: {{ . | quote }}
+  {{- end }}
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+---
+{{- end }}
+# Grafana admin password: generated once in-cluster, never stored in Git or
+# Terraform state. Break-glass only; wire up SSO for day-to-day access.
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: grafana-admin
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  length: 32
+  digits: 6
+  symbols: 4
+  noUpper: false
+  allowRepeat: true
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: grafana-admin
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  refreshPolicy: CreatedOnce
+  target:
+    name: grafana-admin
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      engineVersion: v2
+      data:
+        admin-user: admin
+        admin-password: "{{ `{{ .password }}` }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: grafana-admin
+---
+{{- if eq $v.cloud "eks" }}
+# Cilium is installed by Terraform before the Prometheus Operator CRDs exist,
+# so its scrape configs live here. Agent and Hubble ports are hostPorts on
+# every node; the operator exposes its own port.
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: cilium-agent
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  namespaceSelector:
+    matchNames: [kube-system]
+  selector:
+    matchLabels:
+      k8s-app: cilium
+  podMetricsEndpoints:
+    - port: prometheus
+      interval: 30s
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: node
+    - port: hubble-metrics
+      interval: 30s
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: node
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: cilium-operator
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  namespaceSelector:
+    matchNames: [kube-system]
+  selector:
+    matchLabels:
+      io.cilium/app: operator
+  podMetricsEndpoints:
+    - port: prometheus
+      interval: 30s
+---
+{{- end }}
+# Argo CD is also installed by Terraform; its metrics Services carry this label.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  namespaceSelector:
+    matchNames: [argocd]
+  selector:
+    matchLabels:
+      platform.monitoring/scrape: argocd
+  endpoints:
+    - port: http-metrics
+      interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: platform-security
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  groups:
+    - name: runtime-detection
+      rules:
+        - alert: FalcoHighPriorityEvent
+          # Falco priorities: 0 emergency .. 3 error, 4 warning, 5 notice
+          expr: sum by (rule_name, priority, k8s_ns_name) (increase(falcosecurity_falco_rules_matches_total{priority=~"0|1|2|3"}[5m])) > 0
+          labels:
+            severity: critical
+            pillar: runtime-detection
+          annotations:
+            summary: "Falco rule {{ `{{ $labels.rule_name }}` }} fired (priority {{ `{{ $labels.priority }}` }})"
+            description: "Investigate the event in Falcosidekick/SNS and the container logs."
+        - alert: SecurityAgentDown
+          expr: up{namespace=~"falco|kyverno"} == 0
+          for: 10m
+          labels:
+            severity: critical
+            pillar: runtime-detection
+          annotations:
+            summary: "{{ `{{ $labels.job }}` }} in {{ `{{ $labels.namespace }}` }} is not being scraped"
+            description: "A runtime-detection or admission component is down or unreachable."
+    - name: admission-and-supply-chain
+      rules:
+        - alert: KyvernoPolicyDenials
+          expr: sum by (policy_name, resource_namespace) (increase(kyverno_validating_policy_results_total{result="fail"}[15m])) > 0
+          labels:
+            severity: warning
+            pillar: workload-isolation
+          annotations:
+            summary: "Policy {{ `{{ $labels.policy_name }}` }} rejected requests in {{ `{{ $labels.resource_namespace }}` }}"
+            description: "Something tried to create a resource that violates platform policy."
+        - alert: UnsignedImageRejected
+          expr: sum by (policy_name, resource_namespace) (increase(kyverno_image_validating_policy_results_total{result=~"fail|error"}[15m])) > 0
+          labels:
+            severity: warning
+            pillar: supply-chain
+          annotations:
+            summary: "Image verification failed in {{ `{{ $labels.resource_namespace }}` }}"
+            description: "An unsigned, unpinned or unverifiable image was blocked by {{ `{{ $labels.policy_name }}` }}."
+    - name: network
+      rules:
+        - alert: NetworkPolicyDropsHigh
+          expr: sum by (direction) (rate(cilium_drop_count_total{reason="Policy denied"}[5m])) > 5
+          for: 15m
+          labels:
+            severity: warning
+            pillar: network-segmentation
+          annotations:
+            summary: "Sustained policy-denied drops ({{ `{{ $value | humanize }}` }}/s, {{ `{{ $labels.direction }}` }})"
+            description: "A workload keeps hitting default-deny. Check with: hubble observe --verdict DROPPED"
+    - name: identity-and-secrets
+      rules:
+        - alert: ExternalSecretSyncFailing
+          expr: externalsecret_status_condition{condition="Ready", status="False"} == 1
+          for: 15m
+          labels:
+            severity: warning
+            pillar: workload-identity
+          annotations:
+            summary: "ExternalSecret {{ `{{ $labels.namespace }}` }}/{{ `{{ $labels.name }}` }} is not syncing"
+            description: "Check the ESO controller's Pod Identity role and the secret path."
+        - alert: CertificateExpiringSoon
+          expr: (certmanager_certificate_expiration_timestamp_seconds - time()) < 14 * 24 * 3600
+          for: 1h
+          labels:
+            severity: warning
+            pillar: network-segmentation
+          annotations:
+            summary: "Certificate {{ `{{ $labels.namespace }}` }}/{{ `{{ $labels.name }}` }} expires in under 14 days"
+            description: "cert-manager has not renewed it; check the issuer and DNS-01 permissions."
+    - name: gitops
+      rules:
+        - alert: ArgoAppDegradedOrOutOfSync
+          expr: argocd_app_info{health_status="Degraded"} == 1 or argocd_app_info{sync_status="OutOfSync"} == 1
+          for: 30m
+          labels:
+            severity: warning
+            pillar: platform
+          annotations:
+            summary: "Argo CD app {{ `{{ $labels.name }}` }} is {{ `{{ $labels.health_status }}` }}/{{ `{{ $labels.sync_status }}` }}"
+            description: "Drift or a failed rollout. Security controls deployed by this app may not be in effect."

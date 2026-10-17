@@ -53,3 +53,47 @@ spec:
       {{- toYaml . | nindent 6 }}
     {{- end }}
 {{- end -}}
+
+
+{{/*
+Cluster-specific kube-prometheus-stack values: external labels, storage size
+and retention, and (AWS) Alertmanager -> SNS routing.
+*/}}
+{{- define "platform.kpsInline" -}}
+{{- $v := .Values -}}
+prometheus:
+  prometheusSpec:
+    externalLabels:
+      cluster: {{ $v.clusterName | quote }}
+    retention: {{ $v.monitoring.retention | quote }}
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          resources:
+            requests:
+              storage: {{ $v.monitoring.storageSize | quote }}
+{{- if and (eq $v.cloud "eks") $v.monitoring.alertsTopicArn }}
+alertmanager:
+  config:
+    route:
+      receiver: sns
+      group_by: [alertname, namespace]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 4h
+      routes:
+        - receiver: "null"
+          matchers: ['alertname = "Watchdog"']
+        - receiver: "null"
+          matchers: ['alertname = "InfoInhibitor"']
+    receivers:
+      - name: "null"
+      - name: sns
+        sns_configs:
+          - topic_arn: {{ $v.monitoring.alertsTopicArn | quote }}
+            send_resolved: true
+            sigv4:
+              region: {{ $v.region | quote }}
+            subject: {{ printf "[%s] {{ .Status | toUpper }} {{ .CommonLabels.alertname }}" $v.clusterName | quote }}
+{{- end }}
+{{- end -}}

@@ -1,0 +1,14 @@
+# EBS gp3 encrypted with the customer-managed key (terraform/modules/aws/storage).
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp3-encrypted
+
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp3-encrypted

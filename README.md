@@ -8,7 +8,7 @@ A secure Kubernetes reference platform on **AWS EKS**, built with **Terraform** 
 | **Supply chain & image hardening** | Private ECR (immutable tags, KMS, continuous Inspector scans); CI with GitHub OIDC; Trivy gate; SBOM; keyless cosign signatures; SLSA provenance; Kyverno admits only signed, digest-pinned images from our registry |
 | **Workload isolation** | Pod Security Admission `restricted` on every tenant namespace; Kyverno CEL policies for read-only root FS, resource limits, dedicated ServiceAccounts, and no host namespaces; Bottlerocket nodes; Argo CD AppProjects that fence teams in |
 | **Network segmentation** | Private subnets, no node public IPs, VPC endpoints, flow logs; restricted API endpoint; Cilium (eBPF, kube-proxy replacement) with WireGuard; auto-generated default-deny NetworkPolicies; one shared Gateway as the only way in |
-| **Runtime detection & logging** | EKS control-plane + audit logs (KMS, 365 days); GuardDuty EKS audit + Runtime Monitoring; Falco (modern eBPF) → Falcosidekick; both alert to one SNS topic; Hubble flow metrics; container logs via CloudWatch Observability |
+| **Runtime detection & logging** | EKS control-plane + audit logs (KMS, 365 days); GuardDuty EKS audit + Runtime Monitoring; Falco (modern eBPF) → Falcosidekick; both alert to one SNS topic; Hubble flow metrics; container logs via CloudWatch Observability; **Prometheus + Alertmanager + Grafana** with security alert rules ([docs/monitoring.md](docs/monitoring.md)) |
 
 See **[docs/security-controls.md](docs/security-controls.md)** for the [coverage matrix](docs/security-controls.md#coverage-summary) and the full control-by-control mapping to CIS EKS, the NSA/CISA hardening guide and NIST SP 800-190.
 
@@ -65,6 +65,8 @@ terraform/
     aws/workload-identity     identities map → EKS Pod Identity roles
     aws/registry              ECR + CI push role
     aws/detection             GuardDuty, alert routing, container logs
+    aws/storage               EBS CSI driver (Pod Identity) + KMS key for encrypted volumes
+    aws/monitoring            platform-alerts SNS topic + Alertmanager identity
     platform-bootstrap        cloud-neutral: Argo CD + AppProjects + root app
   envs/dev                    composes the modules
 platform/
@@ -74,7 +76,7 @@ policies/kyverno/             CEL admission policies (Helm chart)
 workloads/sample/             hardened example app (base + overlays/eks)
 app/sample/                   its Go source + distroless Dockerfile
 .github/workflows/            terraform, image (supply chain), manifests
-docs/                         controls mapping, getting started, GKE guide, decisions
+docs/                         controls mapping, monitoring, getting started, GKE guide, decisions
 ```
 
 ## Getting started

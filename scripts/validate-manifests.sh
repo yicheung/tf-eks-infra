@@ -54,6 +54,10 @@ dns:
   acmeStaging: true
 alerts:
   snsTopicArn: arn:aws:sns:us-east-1:123456789012:tf-eks-infra-dev-security-alerts
+storage:
+  kmsKeyArn: arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000
+monitoring:
+  alertsTopicArn: arn:aws:sns:us-east-1:123456789012:tf-eks-infra-dev-platform-alerts
 VALUES
 
 render() {
@@ -77,6 +81,7 @@ crd_schemas() {
     "https://raw.githubusercontent.com/kyverno/kyverno/v1.19.1/config/crds/policies.kyverno.io/policies.kyverno.io_generatingpolicies.yaml"
     "https://raw.githubusercontent.com/external-secrets/external-secrets/helm-chart-2.12.0/config/crds/bases/external-secrets.io_clustersecretstores.yaml"
     "https://raw.githubusercontent.com/external-secrets/external-secrets/helm-chart-2.12.0/config/crds/bases/external-secrets.io_externalsecrets.yaml"
+    "https://raw.githubusercontent.com/external-secrets/external-secrets/helm-chart-2.12.0/config/crds/bases/generators.external-secrets.io_passwords.yaml"
   )
   for u in "${urls[@]}"; do curl -fsSL "$u" -o "$OUT/crd-$(basename "$u")"; done
   python3 - "$OUT" "$ROOT/.schemas" <<'PY'

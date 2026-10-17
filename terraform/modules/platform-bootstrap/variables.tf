@@ -32,6 +32,7 @@ variable "platform_chart_repos" {
     "https://kyverno.github.io/kyverno",
     "https://falcosecurity.github.io/charts",
     "https://aws.github.io/eks-charts",
+    "https://prometheus-community.github.io/helm-charts",
   ]
 }
 

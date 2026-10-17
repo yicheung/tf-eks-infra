@@ -185,6 +185,27 @@ module "detection" {
 }
 
 # ---------------------------------------------------------------------------
+# Storage (encrypted EBS volumes) and monitoring (alert routing)
+# ---------------------------------------------------------------------------
+module "storage" {
+  source = "../../modules/aws/storage"
+
+  cluster_name = module.eks.cluster_name
+  tags         = local.tags
+
+  # The CSI controller needs the pod network.
+  depends_on = [module.eks_cni]
+}
+
+module "monitoring" {
+  source = "../../modules/aws/monitoring"
+
+  cluster_name = module.eks.cluster_name
+  alert_emails = var.platform_alert_emails
+  tags         = local.tags
+}
+
+# ---------------------------------------------------------------------------
 # GitOps hand-off
 # ---------------------------------------------------------------------------
 module "platform" {
@@ -222,7 +243,15 @@ module "platform" {
     alerts = {
       snsTopicArn = module.detection.security_alerts_topic_arn
     }
+
+    storage = {
+      kmsKeyArn = module.storage.ebs_kms_key_arn
+    }
+
+    monitoring = {
+      alertsTopicArn = module.monitoring.platform_alerts_topic_arn
+    }
   }
 
-  depends_on = [module.eks_cni, module.workload_identity]
+  depends_on = [module.eks_cni, module.workload_identity, module.storage, module.monitoring]
 }

@@ -1,0 +1,103 @@
+# CRDs come from the prometheus-operator-crds app (sync wave -1) so other
+# charts can create ServiceMonitors before this stack is installed.
+crds:
+  enabled: false
+
+# EKS (and GKE) manage the control plane: these targets aren't scrapeable,
+# and there is no kube-proxy (Cilium replaces it).
+kubeControllerManager: { enabled: false }
+kubeScheduler: { enabled: false }
+kubeEtcd: { enabled: false }
+kubeProxy: { enabled: false }
+
+defaultRules:
+  create: true
+  rules:
+    etcd: false
+    kubeControllerManager: false
+    kubeSchedulerAlerting: false
+    kubeSchedulerRecording: false
+    kubeProxy: false
+    windows: false
+
+prometheus:
+  prometheusSpec:
+    replicas: 1
+    retentionSize: 40GB
+    # Pick up every ServiceMonitor/PodMonitor/PrometheusRule in the cluster,
+    # not only ones labelled for this Helm release.
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    scrapeConfigSelectorNilUsesHelmValues: false
+    resources:
+      requests: { cpu: 200m, memory: 1Gi }
+      limits: { memory: 4Gi }
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: [ReadWriteOnce]
+          resources:
+            requests:
+              storage: 50Gi
+
+alertmanager:
+  # Fixed name: Terraform binds the SNS publish role to it (Pod Identity).
+  serviceAccount:
+    name: alertmanager
+  alertmanagerSpec:
+    replicas: 1
+    resources:
+      requests: { cpu: 20m, memory: 64Mi }
+      limits: { memory: 256Mi }
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes: [ReadWriteOnce]
+          resources:
+            requests:
+              storage: 5Gi
+
+grafana:
+  # Credentials from the ESO-generated secret (platform/bootstrap/templates/monitoring.yaml).
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+  service:
+    type: ClusterIP          # port-forward or an internal route; never a public LB
+  persistence:
+    enabled: false           # dashboards and datasources are provisioned from Git
+  grafana.ini:
+    analytics:
+      reporting_enabled: false
+      check_for_updates: false
+      check_for_plugin_updates: false
+    security:
+      disable_gravatar: true
+      cookie_secure: true    # browsers treat http://localhost (port-forward) as secure
+      cookie_samesite: strict
+      allow_embedding: false
+      strict_transport_security: true
+    auth.anonymous:
+      enabled: false
+    users:
+      allow_sign_up: false
+    snapshots:
+      external_enabled: false
+  sidecar:
+    dashboards:
+      enabled: true
+      searchNamespace: ALL   # Cilium (kube-system), Kyverno, Falco ship dashboards as ConfigMaps
+      folderAnnotation: grafana_dashboard_folder
+      provider:
+        foldersFromFilesStructure: true
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits: { memory: 512Mi }
+
+kube-state-metrics:
+  resources:
+    requests: { cpu: 20m, memory: 64Mi }
+    limits: { memory: 256Mi }

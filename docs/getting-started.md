@@ -64,10 +64,14 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.pas
 ```
 
 Sync waves:
-- **Wave 0:** cert-manager, ESO, Kyverno, AWS LB Controller
-- **Wave 1:** Falco
-- **Wave 2:** policies, ClusterSecretStore/Issuer, shared Gateway
+- **Wave -2:** `monitoring` namespace, encrypted `gp3-encrypted` StorageClass
+- **Wave -1:** Prometheus Operator CRDs
+- **Wave 0:** cert-manager, ESO, Kyverno, AWS LB Controller (each with its ServiceMonitor)
+- **Wave 1:** Falco, Grafana admin secret
+- **Wave 2:** kube-prometheus-stack, policies, scrape configs and security alert rules, ClusterSecretStore/Issuer, shared Gateway
 - **Wave 3:** sample app
+
+Grafana and alerting: see [monitoring.md](monitoring.md).
 
 ## 5. Wire up CI
 

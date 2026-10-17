@@ -1,6 +1,12 @@
 {{- $v := .Values -}}
 {{- $isEks := eq $v.cloud "eks" -}}
 
+{{/* ---------------- wave -1: Prometheus Operator CRDs ----------------
+     Installed first so every later chart can ship its own ServiceMonitor. */}}
+
+{{ include "platform.helmApp" (dict "root" $ "name" "prometheus-operator-crds" "namespace" "monitoring" "wave" "-1" "chart" $v.charts.prometheusOperatorCrds) }}
+---
+
 {{/* ---------------- wave 0: controllers with CRDs ---------------- */}}
 
 {{ include "platform.helmApp" (dict "root" $ "name" "cert-manager" "namespace" "cert-manager" "wave" "0" "chart" $v.charts.certManager) }}
@@ -25,7 +31,11 @@
      "managedNamespaceMetadata" (dict "labels" (dict "pod-security.kubernetes.io/enforce" "privileged"))) }}
 ---
 
-{{/* ---------------- wave 2: cluster policy and config ---------------- */}}
+{{/* ---------------- wave 2: monitoring, cluster policy and config ---------------- */}}
+
+{{ include "platform.helmApp" (dict "root" $ "name" "kube-prometheus-stack" "namespace" "monitoring" "wave" "2" "chart" $v.charts.kubePrometheusStack
+     "inline" (include "platform.kpsInline" $ | fromYaml)) }}
+---
 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
