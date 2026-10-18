@@ -33,6 +33,7 @@ storage:
   kmsKeyArn: ""         # AWS: KMS key for the encrypted EBS StorageClass
 
 monitoring:
+  enabled: true         # Prometheus/Alertmanager/Grafana + every chart's ServiceMonitor
   alertsTopicArn: ""    # operational alerts from Alertmanager (AWS SNS)
   retention: 15d
   storageSize: 50Gi

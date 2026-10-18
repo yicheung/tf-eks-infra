@@ -100,7 +100,7 @@ kubectl -n argocd get applications
 ## Local checks
 
 ```bash
-make check        # terraform validate + tflint + trivy + checkov + rendered-manifest validation
+make check        # terraform validate + terraform test + tflint + trivy + checkov + rendered-manifest checks
 ```
 
 ## Status

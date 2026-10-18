@@ -97,3 +97,59 @@ alertmanager:
             subject: {{ printf "[%s] {{ .Status | toUpper }} {{ .CommonLabels.alertname }}" $v.clusterName | quote }}
 {{- end }}
 {{- end -}}
+
+
+{{/* Metrics wiring per chart, only when the monitoring stack is enabled. */}}
+{{- define "platform.values.certManager" -}}
+{{- if .Values.monitoring.enabled }}
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: true
+{{- end }}
+{{- end -}}
+
+{{- define "platform.values.externalSecrets" -}}
+{{- if .Values.monitoring.enabled }}
+metrics:
+  service:
+    enabled: true
+serviceMonitor:
+  enabled: true
+{{- end }}
+{{- end -}}
+
+{{- define "platform.values.kyverno" -}}
+{{- if .Values.monitoring.enabled }}
+admissionController:
+  serviceMonitor: { enabled: true }
+backgroundController:
+  serviceMonitor: { enabled: true }
+cleanupController:
+  serviceMonitor: { enabled: true }
+reportsController:
+  serviceMonitor: { enabled: true }
+grafana:
+  enabled: true
+{{- end }}
+{{- end -}}
+
+{{- define "platform.values.falco" -}}
+{{- $v := .Values -}}
+{{- if $v.monitoring.enabled }}
+serviceMonitor:
+  create: true
+grafana:
+  dashboards:
+    enabled: true
+{{- end }}
+{{- if and (eq $v.cloud "eks") $v.alerts.snsTopicArn }}
+falcosidekick:
+  config:
+    aws:
+      region: {{ $v.region | quote }}
+      sns:
+        topicarn: {{ $v.alerts.snsTopicArn | quote }}
+        minimumpriority: error
+{{- end }}
+{{- end -}}

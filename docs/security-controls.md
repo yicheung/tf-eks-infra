@@ -96,6 +96,8 @@ Monitoring (Prometheus, Alertmanager, Grafana) was added afterwards; see [monito
 | Container logs + Container Insights via the CloudWatch Observability add-on (Pod Identity) | `modules/aws/detection` | — |
 | Kyverno policy reports (background scans) for audit evidence | Kyverno defaults | — |
 
+> **Switches:** `enable_monitoring`, `enable_container_logs`, `enable_flow_logs` and `control_plane_log_types` can turn parts of this pillar off for cheap dev clusters ([monitoring.md](monitoring.md#logging-and-monitoring-switches)). The defaults keep everything on. Never turn off `audit`/`authenticator` control-plane logs or flow logs in shared or production environments.
+
 ## Known gaps
 
 These are deliberate next steps, not oversights:

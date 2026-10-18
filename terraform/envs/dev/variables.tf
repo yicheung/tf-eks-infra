@@ -100,6 +100,35 @@ variable "deletion_protection" {
   default     = false
 }
 
+variable "control_plane_log_types" {
+  description = "EKS control-plane log types to CloudWatch. Keep at least audit + authenticator; [] turns control-plane logging off."
+  type        = list(string)
+  default     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+  validation {
+    condition     = alltrue([for t in var.control_plane_log_types : contains(["api", "audit", "authenticator", "controllerManager", "scheduler"], t)])
+    error_message = "Valid log types: api, audit, authenticator, controllerManager, scheduler."
+  }
+}
+
+variable "enable_flow_logs" {
+  description = "VPC flow logs to CloudWatch."
+  type        = bool
+  default     = true
+}
+
+variable "enable_container_logs" {
+  description = "CloudWatch Observability add-on (container logs + Container Insights)."
+  type        = bool
+  default     = true
+}
+
+variable "enable_monitoring" {
+  description = "Prometheus, Alertmanager and Grafana (plus the EBS CSI driver, encrypted StorageClass and platform-alerts SNS topic they use)."
+  type        = bool
+  default     = true
+}
+
 variable "log_retention_days" {
   description = "CloudWatch retention for flow and control-plane logs."
   type        = number

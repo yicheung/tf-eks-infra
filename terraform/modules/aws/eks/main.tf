@@ -53,8 +53,8 @@ module "eks" {
   }
 
   # --- Control-plane logging ----------------------------------------------------
-  enabled_log_types                      = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  create_cloudwatch_log_group            = true
+  enabled_log_types                      = var.control_plane_log_types
+  create_cloudwatch_log_group            = length(var.control_plane_log_types) > 0
   cloudwatch_log_group_retention_in_days = var.log_retention_days
   cloudwatch_log_group_kms_key_id        = var.log_kms_key_arn
 

@@ -54,9 +54,5 @@ falcosidekick:
 metrics:
   enabled: true
 
-serviceMonitor:
-  create: true
-
-grafana:
-  dashboards:
-    enabled: true
+# ServiceMonitor + Grafana dashboard are injected by platform/bootstrap when
+# monitoring.enabled.

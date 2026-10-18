@@ -63,6 +63,17 @@ variable "node_groups" {
   }
 }
 
+variable "control_plane_log_types" {
+  description = "EKS control-plane log types sent to CloudWatch. [] disables control-plane logging."
+  type        = list(string)
+  default     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+  validation {
+    condition     = alltrue([for t in var.control_plane_log_types : contains(["api", "audit", "authenticator", "controllerManager", "scheduler"], t)])
+    error_message = "Valid log types: api, audit, authenticator, controllerManager, scheduler."
+  }
+}
+
 variable "log_retention_days" {
   description = "Retention for control-plane logs."
   type        = number

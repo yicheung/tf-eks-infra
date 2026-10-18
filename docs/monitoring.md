@@ -21,6 +21,50 @@ Defaults:
 
 Change retention and volume size through `monitoring.retention` / `monitoring.storageSize` in `platform/bootstrap/values.yaml`. Change resources and other settings in `platform/values/kube-prometheus-stack/common.yaml`.
 
+## Logging and monitoring switches
+
+Every logging and monitoring feature is on by default. Each can be switched off in `terraform/envs/dev/terraform.tfvars`, for example to keep a throwaway dev cluster cheap:
+
+| Variable | Default | Turns on / off | ≈ dev cost when on | Security impact when off |
+|---|---|---|---|---|
+| `enable_monitoring` | `true` | Prometheus, Alertmanager, Grafana; the Prometheus Operator CRDs; **every chart's ServiceMonitor and dashboard**; the security alert rules; the EBS CSI driver, KMS key and `gp3-encrypted` StorageClass; the platform-alerts SNS topic and Alertmanager role | ~$0.15/day storage plus ~1.5 vCPU / 3 GiB on the nodes | No metrics, dashboards or alert rules. Falco and GuardDuty still alert through the security SNS topic |
+| `enable_container_logs` | `true` | CloudWatch Observability add-on (container logs + Container Insights) | ~$0.5–2/day | No central container logs. Falco events are still delivered to SNS |
+| `enable_flow_logs` | `true` | VPC flow logs to CloudWatch (KMS) | ~$0.05–0.5/day | No network forensics (CIS AWS 3.9) |
+| `control_plane_log_types` | all five | EKS `api`, `audit`, `authenticator`, `controllerManager`, `scheduler` logs; `[]` = off | ~$0.5–2/day, mostly `api` and `audit` | **Keep `audit` + `authenticator`**: they record who did what in the cluster. GuardDuty reads the audit stream separately, but your own investigations need these logs |
+| `log_retention_days` | `365` | Retention for flow and control-plane logs | storage only | — |
+
+Lean dev profile (saves roughly $1–3/day against everything on):
+
+```hcl
+enable_monitoring       = true                        # or false to free most of a node
+enable_container_logs   = false
+enable_flow_logs        = true
+control_plane_log_types = ["audit", "authenticator"]
+log_retention_days      = 30
+```
+
+How `enable_monitoring` works end to end:
+- **Terraform** skips the `storage` and `monitoring` modules (`count = 0`) and passes `monitoring.enabled` to the root chart.
+- **The root chart** (`platform/bootstrap`) then:
+  - leaves out the `prometheus-operator-crds` and `kube-prometheus-stack` apps and `templates/monitoring.yaml`
+  - stops injecting ServiceMonitor/dashboard values into cert-manager, External Secrets, Kyverno and Falco. Those charts would fail to sync if they asked for ServiceMonitors without the CRDs.
+
+The toggle is covered by tests (see below).
+
+### Tests
+
+- `terraform -chdir=terraform/envs/dev test` runs `tests/logging_monitoring.tftest.hcl`. The providers are mocked, so it needs no AWS credentials. It covers four cases:
+  - **defaults:** everything is created
+  - **lean dev profile:** monitoring modules are skipped and outputs are null
+  - **`control_plane_log_types = []`:** control-plane logging is off
+  - **an unknown log type:** rejected by validation
+- `scripts/validate-manifests.sh` renders the platform with monitoring both on and off. It then checks:
+  - the monitoring apps, CRD-backed resources and namespace appear only when it's on
+  - no chart enables metrics when it's off
+  - Falco keeps its SNS alert routing either way
+
+Both run in CI (`terraform.yml`, `manifests.yml`) and through `make check`.
+
 ## What is scraped
 
 | Source | How | Dashboards |

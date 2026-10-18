@@ -38,5 +38,5 @@ output "secrets_kms_key_arn" {
 
 output "control_plane_log_group" {
   description = "CloudWatch log group with control-plane and audit logs."
-  value       = module.eks.cloudwatch_log_group_name
+  value       = length(var.control_plane_log_types) > 0 ? module.eks.cloudwatch_log_group_name : null
 }

@@ -3,18 +3,12 @@ admissionController:
   replicas: 3
   serviceAccount:
     name: kyverno-admission-controller
-  serviceMonitor:
-    enabled: true
 
 cleanupController:
   replicas: 2
-  serviceMonitor:
-    enabled: true
 
 reportsController:
   replicas: 2
-  serviceMonitor:
-    enabled: true
 
 features:
   policyExceptions:
@@ -27,8 +21,6 @@ features:
 # The tenant-default-deny GeneratingPolicy creates NetworkPolicies.
 backgroundController:
   replicas: 2
-  serviceMonitor:
-    enabled: true
   rbac:
     clusterRole:
       extraResources:
@@ -36,6 +28,5 @@ backgroundController:
           resources: [networkpolicies]
           verbs: [create, update, patch, delete, get, list, watch]
 
-# Dashboard ConfigMap for the Grafana sidecar.
-grafana:
-  enabled: true
+# ServiceMonitors + Grafana dashboard are injected by platform/bootstrap when
+# monitoring.enabled.

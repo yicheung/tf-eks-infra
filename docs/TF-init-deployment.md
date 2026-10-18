@@ -115,7 +115,18 @@ platform_alert_emails = ["you@example.com"]   # Alertmanager (operational) alert
 
 > **Don't skip this:** `cluster_admin_principal_arns` must include the role you're running Terraform as. There's no automatic creator-admin, so leaving it out locks Terraform out of the cluster it just created. Use the IAM role ARN (`arn:aws:iam::…:role/aws-reserved/…`), not the `arn:aws:sts::…:assumed-role/…` ARN that `get-caller-identity` prints.
 
-`terraform.tfvars` holds no secrets (ARNs, CIDRs), so commit it so CI can plan.
+Optional cost switches for a dev cluster (all default to on; details and security trade-offs in [monitoring.md](monitoring.md#logging-and-monitoring-switches)):
+
+```hcl
+az_count                   = 2
+enable_interface_endpoints = false
+enable_container_logs      = false
+control_plane_log_types    = ["audit", "authenticator"]
+log_retention_days         = 30
+# enable_monitoring        = false   # skip Prometheus/Grafana entirely
+```
+
+`terraform.tfvars` holds no secrets (ARNs, CIDRs), so you can commit it for CI. **If the repo is public, don't**: it contains your IP address and email. Keep it local, or store it as CI secrets instead.
 
 ## 4. Apply in two passes
 

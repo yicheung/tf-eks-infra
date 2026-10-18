@@ -1,4 +1,5 @@
 {{- $v := .Values -}}
+{{- if $v.monitoring.enabled }}
 {{- /*
 Monitoring plumbing owned by the platform (not by any one chart):
   - the monitoring namespace and the encrypted default StorageClass
@@ -237,3 +238,4 @@ spec:
           annotations:
             summary: "Argo CD app {{ `{{ $labels.name }}` }} is {{ `{{ $labels.health_status }}` }}/{{ `{{ $labels.sync_status }}` }}"
             description: "Drift or a failed rollout. Security controls deployed by this app may not be in effect."
+{{- end }}

@@ -53,6 +53,7 @@ module "network" {
   az_count                   = var.az_count
   single_nat_gateway         = var.single_nat_gateway
   enable_interface_endpoints = var.enable_interface_endpoints
+  enable_flow_logs           = var.enable_flow_logs
   log_kms_key_arn            = aws_kms_key.logs.arn
   log_retention_days         = var.log_retention_days
   tags                       = local.tags
@@ -72,6 +73,7 @@ module "eks" {
   public_access_cidrs      = var.api_public_access_cidrs
   access_entries           = merge(local.cluster_admin_entries, local.cluster_viewer_entries)
   node_groups              = var.node_groups
+  control_plane_log_types  = var.control_plane_log_types
   log_kms_key_arn          = aws_kms_key.logs.arn
   log_retention_days       = var.log_retention_days
   deletion_protection      = var.deletion_protection
@@ -178,6 +180,7 @@ module "detection" {
   create_guardduty_detector      = var.create_guardduty_detector
   existing_guardduty_detector_id = var.existing_guardduty_detector_id
   alert_emails                   = var.security_alert_emails
+  enable_container_logs          = var.enable_container_logs
   tags                           = local.tags
 
   # Add-ons need the pod network.
@@ -187,8 +190,10 @@ module "detection" {
 # ---------------------------------------------------------------------------
 # Storage (encrypted EBS volumes) and monitoring (alert routing)
 # ---------------------------------------------------------------------------
+# Only needed by the monitoring stack today (Prometheus/Alertmanager volumes).
 module "storage" {
   source = "../../modules/aws/storage"
+  count  = var.enable_monitoring ? 1 : 0
 
   cluster_name = module.eks.cluster_name
   tags         = local.tags
@@ -199,6 +204,7 @@ module "storage" {
 
 module "monitoring" {
   source = "../../modules/aws/monitoring"
+  count  = var.enable_monitoring ? 1 : 0
 
   cluster_name = module.eks.cluster_name
   alert_emails = var.platform_alert_emails
@@ -245,11 +251,12 @@ module "platform" {
     }
 
     storage = {
-      kmsKeyArn = module.storage.ebs_kms_key_arn
+      kmsKeyArn = try(module.storage[0].ebs_kms_key_arn, "")
     }
 
     monitoring = {
-      alertsTopicArn = module.monitoring.platform_alerts_topic_arn
+      enabled        = var.enable_monitoring
+      alertsTopicArn = try(module.monitoring[0].platform_alerts_topic_arn, "")
     }
   }
 

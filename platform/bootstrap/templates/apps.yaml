@@ -1,19 +1,26 @@
 {{- $v := .Values -}}
 {{- $isEks := eq $v.cloud "eks" -}}
 
+{{- $mon := $v.monitoring.enabled -}}
+
 {{/* ---------------- wave -1: Prometheus Operator CRDs ----------------
      Installed first so every later chart can ship its own ServiceMonitor. */}}
 
+{{- if $mon }}
 {{ include "platform.helmApp" (dict "root" $ "name" "prometheus-operator-crds" "namespace" "monitoring" "wave" "-1" "chart" $v.charts.prometheusOperatorCrds) }}
 ---
+{{- end }}
 
 {{/* ---------------- wave 0: controllers with CRDs ---------------- */}}
 
-{{ include "platform.helmApp" (dict "root" $ "name" "cert-manager" "namespace" "cert-manager" "wave" "0" "chart" $v.charts.certManager) }}
+{{ include "platform.helmApp" (dict "root" $ "name" "cert-manager" "namespace" "cert-manager" "wave" "0" "chart" $v.charts.certManager
+     "inline" (include "platform.values.certManager" $ | fromYaml)) }}
 ---
-{{ include "platform.helmApp" (dict "root" $ "name" "external-secrets" "namespace" "external-secrets" "wave" "0" "chart" $v.charts.externalSecrets) }}
+{{ include "platform.helmApp" (dict "root" $ "name" "external-secrets" "namespace" "external-secrets" "wave" "0" "chart" $v.charts.externalSecrets
+     "inline" (include "platform.values.externalSecrets" $ | fromYaml)) }}
 ---
-{{ include "platform.helmApp" (dict "root" $ "name" "kyverno" "namespace" "kyverno" "wave" "0" "chart" $v.charts.kyverno) }}
+{{ include "platform.helmApp" (dict "root" $ "name" "kyverno" "namespace" "kyverno" "wave" "0" "chart" $v.charts.kyverno
+     "inline" (include "platform.values.kyverno" $ | fromYaml)) }}
 ---
 {{- if $isEks }}
 {{ include "platform.helmApp" (dict "root" $ "name" "aws-load-balancer-controller" "namespace" "kube-system" "wave" "0" "chart" $v.charts.awsLoadBalancerController
@@ -23,19 +30,18 @@
 
 {{/* ---------------- wave 1: runtime detection ---------------- */}}
 
-{{- $falcoInline := dict -}}
-{{- if and $isEks $v.alerts.snsTopicArn }}
-{{- $falcoInline = dict "falcosidekick" (dict "config" (dict "aws" (dict "region" $v.region "sns" (dict "topicarn" $v.alerts.snsTopicArn "minimumpriority" "error")))) -}}
-{{- end }}
-{{ include "platform.helmApp" (dict "root" $ "name" "falco" "namespace" "falco" "wave" "1" "chart" $v.charts.falco "inline" $falcoInline
+{{ include "platform.helmApp" (dict "root" $ "name" "falco" "namespace" "falco" "wave" "1" "chart" $v.charts.falco
+     "inline" (include "platform.values.falco" $ | fromYaml)
      "managedNamespaceMetadata" (dict "labels" (dict "pod-security.kubernetes.io/enforce" "privileged"))) }}
 ---
 
 {{/* ---------------- wave 2: monitoring, cluster policy and config ---------------- */}}
 
+{{- if $mon }}
 {{ include "platform.helmApp" (dict "root" $ "name" "kube-prometheus-stack" "namespace" "monitoring" "wave" "2" "chart" $v.charts.kubePrometheusStack
      "inline" (include "platform.kpsInline" $ | fromYaml)) }}
 ---
+{{- end }}
 
 apiVersion: argoproj.io/v1alpha1
 kind: Application

@@ -51,10 +51,10 @@ module "vpc" {
   default_security_group_ingress = []
   default_security_group_egress  = []
 
-  # VPC flow logs to CloudWatch, KMS-encrypted.
-  enable_flow_log                                 = true
-  create_flow_log_cloudwatch_log_group            = true
-  create_flow_log_cloudwatch_iam_role             = true
+  # VPC flow logs to CloudWatch, KMS-encrypted (toggle: enable_flow_logs).
+  enable_flow_log                                 = var.enable_flow_logs
+  create_flow_log_cloudwatch_log_group            = var.enable_flow_logs
+  create_flow_log_cloudwatch_iam_role             = var.enable_flow_logs
   flow_log_max_aggregation_interval               = 60
   flow_log_cloudwatch_log_group_retention_in_days = var.log_retention_days
   flow_log_cloudwatch_log_group_kms_key_id        = var.log_kms_key_arn
