@@ -22,5 +22,4 @@ webhook:
 cainjector:
   replicaCount: 2
 
-prometheus:
-  enabled: false
+# ServiceMonitor is injected by platform/bootstrap when monitoring.enabled.

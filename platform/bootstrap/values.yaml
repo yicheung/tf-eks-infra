@@ -27,7 +27,16 @@ dns:
   secretPrefix: ""
 
 alerts:
-  snsTopicArn: ""
+  snsTopicArn: ""       # security alerts (GuardDuty, Falco)
+
+storage:
+  kmsKeyArn: ""         # AWS: KMS key for the encrypted EBS StorageClass
+
+monitoring:
+  enabled: true         # Prometheus/Alertmanager/Grafana + every chart's ServiceMonitor
+  alertsTopicArn: ""    # operational alerts from Alertmanager (AWS SNS)
+  retention: 15d
+  storageSize: 50Gi
 
 # Pinned chart versions. Bump through PRs (Renovate/Dependabot can track these).
 charts:
@@ -51,6 +60,14 @@ charts:
     repo: https://aws.github.io/eks-charts
     chart: aws-load-balancer-controller
     version: 3.6.0
+  prometheusOperatorCrds:
+    repo: https://prometheus-community.github.io/helm-charts
+    chart: prometheus-operator-crds
+    version: 32.0.1        # operator v0.94.1, must match kubePrometheusStack
+  kubePrometheusStack:
+    repo: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    version: 92.10.1       # operator v0.94.1
 
 # Namespaces exempt from workload policies (platform components that need
 # privileges, e.g. Falco's eBPF probe or the CNI).
@@ -65,6 +82,7 @@ systemNamespaces:
   - kyverno
   - gateway-system
   - falco
+  - monitoring
   - amazon-cloudwatch
   - amazon-guardduty
   - cilium-secrets

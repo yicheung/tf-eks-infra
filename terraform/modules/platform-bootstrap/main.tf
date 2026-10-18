@@ -46,8 +46,34 @@ resource "helm_release" "argocd" {
 
     dex = { enabled = false }
 
+    # Metrics Services only. ServiceMonitors are added by GitOps
+    # (platform/bootstrap/templates/monitoring.yaml) because the Prometheus
+    # Operator CRDs don't exist yet when Terraform installs Argo CD.
+    controller = {
+      metrics = {
+        enabled = true
+        service = { labels = { "platform.monitoring/scrape" = "argocd" } }
+      }
+    }
+    repoServer = {
+      metrics = {
+        enabled = true
+        service = { labels = { "platform.monitoring/scrape" = "argocd" } }
+      }
+    }
+    applicationSet = {
+      metrics = {
+        enabled = true
+        service = { labels = { "platform.monitoring/scrape" = "argocd" } }
+      }
+    }
+
     server = {
       service = { type = "ClusterIP" }
+      metrics = {
+        enabled = true
+        service = { labels = { "platform.monitoring/scrape" = "argocd" } }
+      }
     }
 
     notifications = { enabled = false }

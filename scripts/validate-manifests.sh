@@ -54,11 +54,21 @@ dns:
   acmeStaging: true
 alerts:
   snsTopicArn: arn:aws:sns:us-east-1:123456789012:tf-eks-infra-dev-security-alerts
+storage:
+  kmsKeyArn: arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000
+monitoring:
+  enabled: true
+  alertsTopicArn: arn:aws:sns:us-east-1:123456789012:tf-eks-infra-dev-platform-alerts
 VALUES
+
+# Same cluster with the monitoring stack switched off (enable_monitoring = false).
+sed -e 's/^  enabled: true$/  enabled: false/' -e 's/^  alertsTopicArn: .*/  alertsTopicArn: ""/' \
+  "$OUT/eks-values.yaml" > "$OUT/eks-values-nomon.yaml"
 
 render() {
   mkdir -p "$OUT/rendered"
   helm template root "$ROOT/platform/bootstrap" -f "$OUT/eks-values.yaml" > "$OUT/rendered/bootstrap.yaml"
+  helm template root "$ROOT/platform/bootstrap" -f "$OUT/eks-values-nomon.yaml" > "$OUT/rendered/bootstrap-nomon.yaml"
   helm template policies "$ROOT/policies/kyverno" -f "$OUT/eks-values.yaml" \
     --set 'imageCredentialProviders={amazon}' > "$OUT/rendered/policies.yaml"
   for overlay in "$ROOT"/workloads/*/overlays/*; do
@@ -77,6 +87,7 @@ crd_schemas() {
     "https://raw.githubusercontent.com/kyverno/kyverno/v1.19.1/config/crds/policies.kyverno.io/policies.kyverno.io_generatingpolicies.yaml"
     "https://raw.githubusercontent.com/external-secrets/external-secrets/helm-chart-2.12.0/config/crds/bases/external-secrets.io_clustersecretstores.yaml"
     "https://raw.githubusercontent.com/external-secrets/external-secrets/helm-chart-2.12.0/config/crds/bases/external-secrets.io_externalsecrets.yaml"
+    "https://raw.githubusercontent.com/external-secrets/external-secrets/helm-chart-2.12.0/config/crds/bases/generators.external-secrets.io_passwords.yaml"
   )
   for u in "${urls[@]}"; do curl -fsSL "$u" -o "$OUT/crd-$(basename "$u")"; done
   python3 - "$OUT" "$ROOT/.schemas" <<'PY'
@@ -118,7 +129,38 @@ validate() {
     "$OUT"/rendered/*.yaml
 }
 
+# Behavioural checks on the rendered output: the monitoring switch must add or
+# remove the whole stack, including every chart's ServiceMonitor.
+assert_monitoring_toggle() {
+  python3 - "$OUT/rendered/bootstrap.yaml" "$OUT/rendered/bootstrap-nomon.yaml" <<'PY'
+import sys, yaml, json
+on, off = ([d for d in yaml.safe_load_all(open(f)) if d] for f in sys.argv[1:])
+MON_KINDS = {"PodMonitor", "ServiceMonitor", "PrometheusRule", "StorageClass", "Password"}
+MON_APPS = {"prometheus-operator-crds", "kube-prometheus-stack"}
+METRIC_KEYS = ("servicemonitor", "serviceMonitor", "grafana")
+def apps(docs): return {d["metadata"]["name"]: d for d in docs if d["kind"] == "Application"}
+def inline(app):
+    srcs = app["spec"].get("sources") or [app["spec"].get("source", {})]
+    return json.dumps(srcs[0].get("helm", {}).get("valuesObject", {}))
+fail = []
+on_apps, off_apps = apps(on), apps(off)
+if not MON_APPS <= on_apps.keys(): fail.append(f"monitoring on: missing apps {MON_APPS - on_apps.keys()}")
+if MON_APPS & off_apps.keys(): fail.append(f"monitoring off: unexpected apps {MON_APPS & off_apps.keys()}")
+if not MON_KINDS <= {d["kind"] for d in on}: fail.append(f"monitoring on: missing kinds {MON_KINDS - {d['kind'] for d in on}}")
+if MON_KINDS & {d["kind"] for d in off}: fail.append(f"monitoring off: unexpected kinds {MON_KINDS & {d['kind'] for d in off}}")
+if any(d["kind"] == "Namespace" and d["metadata"]["name"] == "monitoring" for d in off): fail.append("monitoring off: namespace still rendered")
+for name in ("cert-manager", "external-secrets", "kyverno", "falco"):
+    if not any(k in inline(on_apps[name]) for k in METRIC_KEYS): fail.append(f"monitoring on: {name} has no metrics values")
+    if any(k in inline(off_apps[name]) for k in METRIC_KEYS): fail.append(f"monitoring off: {name} still enables metrics")
+if "falcosidekick" not in inline(off_apps["falco"]): fail.append("monitoring off: Falco lost its SNS alert routing")
+if fail:
+    print("\n".join("FAIL " + f for f in fail)); sys.exit(1)
+print(f"monitoring toggle: OK ({len(on)} resources on, {len(off)} off)")
+PY
+}
+
 install_tools
 crd_schemas
 render
+assert_monitoring_toggle
 validate

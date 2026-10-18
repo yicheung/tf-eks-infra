@@ -15,6 +15,7 @@ systemNamespaces:
   - kyverno
   - gateway-system
   - falco
+  - monitoring
 
 # Only this registry/prefix is allowed for workload images, and images in it
 # must be signed by `signer`.

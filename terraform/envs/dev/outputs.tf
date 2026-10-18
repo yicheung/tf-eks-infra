@@ -42,3 +42,13 @@ output "security_alerts_topic_arn" {
   description = "SNS topic for GuardDuty (and optionally Falco) alerts."
   value       = module.detection.security_alerts_topic_arn
 }
+
+output "platform_alerts_topic_arn" {
+  description = "SNS topic for operational alerts from Alertmanager."
+  value       = try(module.monitoring[0].platform_alerts_topic_arn, null)
+}
+
+output "grafana_ui_command" {
+  description = "Reach Grafana (no public exposure). Admin password: kubectl -n monitoring get secret grafana-admin -o jsonpath='{.data.admin-password}' | base64 -d"
+  value       = var.enable_monitoring ? "kubectl -n monitoring port-forward svc/kube-prometheus-stack-grafana 3000:80" : null
+}

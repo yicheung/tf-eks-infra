@@ -37,6 +37,12 @@ variable "enable_interface_endpoints" {
   default     = true
 }
 
+variable "enable_flow_logs" {
+  description = "Send VPC flow logs to CloudWatch. Keep on outside throwaway dev clusters (CIS AWS 3.9)."
+  type        = bool
+  default     = true
+}
+
 variable "log_retention_days" {
   description = "Retention for VPC flow logs."
   type        = number

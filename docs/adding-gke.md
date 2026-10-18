@@ -22,6 +22,8 @@ The repo is split so that a second cloud means **new modules plus value overlays
 | Identities | `aws/workload-identity`: `identities` map → Pod Identity | `gcp/workload-identity`: **same `identities` map** → IAM bindings on `principal://iam.googleapis.com/projects/N/locations/global/workloadIdentityPools/P.svc.id.goog/subject/ns/NS/sa/SA` (direct WIF, no GSA needed) |
 | Registry | `aws/registry`: ECR + OIDC push role | `gcp/registry`: Artifact Registry (immutable tags, CMEK, vulnerability scanning) + Workload Identity Federation for GitHub |
 | Detection | `aws/detection`: GuardDuty + SNS + CloudWatch | `gcp/detection`: Security Command Center / GKE threat detection, Pub/Sub topic, Cloud Logging sinks |
+| Storage | `aws/storage`: EBS CSI add-on + KMS key; StorageClass `gp3-encrypted` in GitOps | Built-in PD CSI driver; CMEK key; add a `pd-balanced` CMEK StorageClass branch in `monitoring.yaml` |
+| Monitoring alerts | `aws/monitoring`: SNS topic + Alertmanager Pod Identity role | Pub/Sub topic + Workload Identity for Alertmanager, or a webhook receiver; set `storageClassName` in `platform/values/kube-prometheus-stack/gke.yaml` |
 
 ## Step by step
 

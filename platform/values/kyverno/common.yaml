@@ -27,3 +27,6 @@ backgroundController:
         - apiGroups: [networking.k8s.io]
           resources: [networkpolicies]
           verbs: [create, update, patch, delete, get, list, watch]
+
+# ServiceMonitors + Grafana dashboard are injected by platform/bootstrap when
+# monitoring.enabled.

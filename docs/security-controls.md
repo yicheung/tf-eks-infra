@@ -17,7 +17,9 @@ Status of the five pillars. All controls are implemented in code and have passed
 | **Supply chain & image hardening** | ✅ Covered | ECR: immutable tags, KMS, continuous scanning. CI: Trivy gate, SBOM, keyless cosign, SLSA provenance. Kyverno admits only signed, digest-pinned images from our registry. | Base images not digest-pinned. Kyverno vs cosign v3 signature format untested. *(new)* Platform component images (Falco, Kyverno, ESO, …) skip signature and digest checks because their namespaces are exempt. |
 | **Workload isolation** | ✅ Covered (tenant namespaces) | PSA `restricted`, read-only root FS, resource limits, dedicated SAs, no host namespaces. Bottlerocket nodes. KMS-encrypted Secrets. Argo CD AppProjects fence tenants. | *(new)* Tenant and platform pods share one node group (no taints or separate pools). *(new)* No per-namespace ResourceQuota/LimitRange. *(new)* No Kubernetes RBAC model for tenant teams. No sandboxed runtime (gVisor/Kata). |
 | **Network segmentation** | ✅ Covered | Private subnets, no node public IPs, restricted API endpoint, VPC endpoints, flow logs. Cilium with WireGuard. Generated default-deny per tenant namespace. Single shared Gateway with TLS; no tenant LoadBalancer/NodePort Services. | *(new)* Tenants can create an allow-all NetworkPolicy that undoes default-deny. *(new)* No FQDN egress allow-listing: allowed egress can reach any internet host. No WAF. No workload-authenticated mTLS (WireGuard encrypts node-to-node only). |
-| **Runtime detection & logging** | ✅ Covered | Control-plane and audit logs (KMS, 365 days). GuardDuty EKS audit + Runtime Monitoring. Falco → Falcosidekick → SNS, shared with GuardDuty findings. Container logs to CloudWatch. Hubble metrics. | No Prometheus/Grafana, so Falco and Hubble metrics aren't scraped. Hubble flow logs not exported or retained. CloudTrail / Security Hub are org-level and out of scope. |
+| **Runtime detection & logging** | ✅ Covered | Control-plane and audit logs (KMS, 365 days). GuardDuty EKS audit + Runtime Monitoring. Falco → Falcosidekick → SNS, shared with GuardDuty findings. Container logs to CloudWatch. Hubble metrics. Prometheus/Alertmanager/Grafana scrape Falco, Kyverno, Cilium/Hubble, cert-manager, ESO and Argo CD, with security alert rules routed to SNS. | Hubble flow logs not exported or retained. Prometheus and Alertmanager run single replicas, with no long-term storage. CloudTrail / Security Hub are org-level and out of scope. |
+
+Monitoring (Prometheus, Alertmanager, Grafana) was added afterwards; see [monitoring.md](monitoring.md).
 
 **Recommended next fixes, in priority order** (all doable before the first apply):
 
@@ -88,8 +90,13 @@ Status of the five pillars. All controls are implemented in code and have passed
 | **Falco** (modern eBPF), upstream rules + a platform rule; **Falcosidekick** routes alerts | `platform/values/falco/` | 800-190 §4.4.4 |
 | GuardDuty findings ≥ 7 and Falco `error`+ go to **one SNS topic** (KMS) | `modules/aws/detection`, `platform/bootstrap/templates/apps.yaml` | Incident response |
 | **Hubble** flow, DNS, drop and policy-verdict metrics | `modules/aws/eks-cni` | NSA "Monitoring" |
+| **Prometheus + Alertmanager + Grafana** (kube-prometheus-stack) scraping every security component; volumes on KMS-encrypted gp3 | `platform/values/kube-prometheus-stack/`, `modules/aws/storage` | NSA "Monitoring"; 800-190 §4.4.4 |
+| **Security alert rules**: Falco high-priority events, agent down, Kyverno denials, image-verification failures, policy-drop spikes, ESO sync failures, cert expiry, Argo CD drift → Alertmanager → SNS (Pod Identity) | `platform/bootstrap/templates/monitoring.yaml`, `modules/aws/monitoring` | Incident response |
+| Grafana: no public exposure, in-cluster generated admin secret, anonymous/sign-up off, secure cookies | `platform/values/kube-prometheus-stack/common.yaml` | CIS 5.x (least exposure) |
 | Container logs + Container Insights via the CloudWatch Observability add-on (Pod Identity) | `modules/aws/detection` | — |
 | Kyverno policy reports (background scans) for audit evidence | Kyverno defaults | — |
+
+> **Switches:** `enable_monitoring`, `enable_container_logs`, `enable_flow_logs` and `control_plane_log_types` can turn parts of this pillar off for cheap dev clusters ([monitoring.md](monitoring.md#logging-and-monitoring-switches)). The defaults keep everything on. Never turn off `audit`/`authenticator` control-plane logs or flow logs in shared or production environments.
 
 ## Known gaps
 
@@ -101,7 +108,7 @@ These are deliberate next steps, not oversights:
 4. **Base images aren't digest-pinned yet** in `app/sample/Dockerfile`. Pin them once, and Dependabot will keep them updated.
 5. **No WAF.** The NLB passes TLS through to Cilium. For L7 WAF, put AWS WAF on an ALB (AWS LB Controller Gateway API support) or CloudFront in front.
 6. **Argo CD SSO** isn't wired up yet. The local admin user stays enabled until `configs.cm.oidc.config` is set.
-7. **Metrics stack** (Prometheus/Grafana) isn't included. Hubble and Falco expose metrics ready to scrape.
+7. ~~**Metrics stack**~~: **resolved.** kube-prometheus-stack added, see [monitoring.md](monitoring.md). Remaining: single-replica Prometheus/Alertmanager, no long-term storage (Thanos or Amazon Managed Prometheus), and Grafana SSO.
 8. **Org-level controls** (GuardDuty delegated admin, Security Hub, CloudTrail org trail, SCPs) belong in an AWS Organizations repo.
 9. **Tenant NetworkPolicy guardrail.** Nothing stops a tenant from adding an allow-all NetworkPolicy that cancels default-deny. Add a Kyverno policy that rejects empty-selector or `0.0.0.0/0` ingress and egress rules in tenant namespaces.
 10. **Egress allow-listing.** Default-deny blocks egress, but any egress a tenant does allow can reach any host. Use CiliumNetworkPolicy `toFQDNs` (with DNS proxy) to name allowed external hosts.

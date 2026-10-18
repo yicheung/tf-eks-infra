@@ -16,8 +16,16 @@ cluster_admin_principal_arns = [
 ]
 
 security_alert_emails = ["you@example.com"]
+platform_alert_emails = ["you@example.com"]   # Alertmanager (operational) alerts
 
 # Optional: public TLS for the sample app
 # domain          = "dev.example.com"
 # route53_zone_id = "Z0123456789ABCDEFGHIJ"
 # acme_email      = "you@example.com"
+
+# Logging and monitoring switches (defaults: everything on). Lean dev example:
+# enable_monitoring       = true
+# enable_container_logs   = false
+# enable_flow_logs        = true
+# control_plane_log_types = ["audit", "authenticator"]
+# log_retention_days      = 30

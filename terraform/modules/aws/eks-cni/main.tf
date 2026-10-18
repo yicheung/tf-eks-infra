@@ -126,10 +126,17 @@ resource "helm_release" "cilium" {
     }
 
     # --- Flow observability -----------------------------------------------------------
+    # Agent and operator metrics (scraped with PodMonitors from GitOps) and
+    # Grafana dashboards as ConfigMaps in kube-system (the Grafana sidecar
+    # watches all namespaces; "monitoring" does not exist yet at this point).
+    prometheus = { enabled = true }
+    dashboards = { enabled = true }
+
     hubble = {
       enabled = true
       relay   = { enabled = true }
       metrics = {
+        dashboards = { enabled = true }
         enabled = [
           "dns",
           "drop",
@@ -144,7 +151,9 @@ resource "helm_release" "cilium" {
     }
 
     operator = {
-      replicas = 2
+      replicas   = 2
+      prometheus = { enabled = true }
+      dashboards = { enabled = true }
     }
 
     # Required for the operator to pick up its Pod Identity credentials.

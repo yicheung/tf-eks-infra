@@ -16,3 +16,6 @@ webhook:
 
 certController:
   replicaCount: 1
+
+# Metrics Service + ServiceMonitor are injected by platform/bootstrap when
+# monitoring.enabled.
