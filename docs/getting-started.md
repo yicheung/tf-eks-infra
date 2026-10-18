@@ -86,7 +86,7 @@ Protect the `dev` Environment with required reviewers.
 
 1. Create its secret, which is optional (the app falls back to a default greeting):
    ```bash
-   aws secretsmanager create-secret --name tf-eks-infra-dev/sample-app \
+   aws secretsmanager create-secret --name parallel-dev/sample-app   # <project>-<environment>/sample-app \
      --secret-string '{"GREETING":"hello from Secrets Manager"}'
    ```
 2. Push a change under `app/sample/`. The `image` workflow builds, scans, pushes, signs and attests the image, then opens a PR that pins the new digest in `workloads/sample/overlays/eks/kustomization.yaml`.

@@ -10,14 +10,16 @@ resources:
 # the placeholder below is rejected by the supply-chain policies, by design.
 images:
   - name: sample-app
-    newName: 123456789012.dkr.ecr.us-east-1.amazonaws.com/tf-eks-infra/sample-app
+    newName: 123456789012.dkr.ecr.us-east-1.amazonaws.com/parallel/sample-app
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
 
 patches:
   - target:
       kind: ExternalSecret
       name: sample-app
+    # Must live under "<project>-<environment>/" (the only prefix ESO's IAM
+    # role can read). Change this if you change project or environment.
     patch: |-
       - op: replace
         path: /spec/dataFrom/0/extract/key
-        value: tf-eks-infra-dev/sample-app
+        value: parallel-dev/sample-app

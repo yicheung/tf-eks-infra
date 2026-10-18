@@ -18,6 +18,11 @@ output "ecr_repository_urls" {
   value       = module.registry.repository_urls
 }
 
+output "ecr_repository_names" {
+  description = "ECR repository names. Set the sample-app value as the ECR_REPOSITORY GitHub Actions variable."
+  value       = { for r in var.ecr_repositories : r => "${var.project}/${r}" }
+}
+
 output "ci_image_push_role_arn" {
   description = "Set as the AWS_IMAGE_PUSH_ROLE_ARN GitHub Actions variable."
   value       = module.registry.ci_push_role_arn

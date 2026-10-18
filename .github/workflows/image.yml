@@ -20,7 +20,8 @@ permissions:
   contents: read
 
 env:
-  IMAGE_NAME: tf-eks-infra/sample-app
+  # ECR repository name, "<project>/sample-app" (terraform output ecr_repository_names).
+  IMAGE_NAME: ${{ vars.ECR_REPOSITORY }}
   CONTEXT: app/sample
 
 jobs:
@@ -32,6 +33,14 @@ jobs:
       id-token: write        # AWS OIDC + Sigstore keyless signing
       attestations: write    # GitHub build provenance
     steps:
+      - name: Check configuration
+        if: github.event_name != 'pull_request'
+        run: |
+          if [ -z "$IMAGE_NAME" ]; then
+            echo "::error::Set the ECR_REPOSITORY Actions variable (terraform output ecr_repository_names), e.g. parallel/sample-app"
+            exit 1
+          fi
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0

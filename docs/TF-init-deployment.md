@@ -2,6 +2,8 @@
 
 These are the exact commands to stand up the AWS infrastructure from an empty account. Run them once per account and environment. For what happens after the cluster is up (GitOps, CI, the sample app), see [getting-started.md](getting-started.md).
 
+> **Project name:** the examples use the default `project = "tf-eks-infra"`. If you set another name in `terraform.tfvars` (e.g. `parallel`), resource names follow it: cluster `parallel-dev`, ECR `parallel/sample-app`, secrets under `parallel-dev/`. Update the sample app's overlay (`workloads/sample/overlays/eks/kustomization.yaml`) to match.
+
 > **Region:** everything below assumes `us-east-1`, the repo default. For another region, change `region` in `terraform/envs/dev/backend.tf` and pass `-var region=<region>` (or set `region` in `terraform.tfvars`) everywhere below.
 
 > **Before step 4:** push this repo to GitHub. Argo CD pulls from `https://github.com/yicheung/tf-eks-infra.git`, and the platform apps stay at "repository not found" until it exists.
@@ -167,6 +169,7 @@ Set these in the GitHub repo under **Settings -> Secrets and variables -> Action
 | `AWS_REGION` | repository | `us-east-1` |
 | `AWS_PLAN_ROLE_ARN` | repository | `terraform -chdir=terraform/bootstrap output -raw terraform_plan_role_arn` |
 | `AWS_IMAGE_PUSH_ROLE_ARN` | repository | `terraform -chdir=terraform/envs/dev output -raw ci_image_push_role_arn` |
+| `ECR_REPOSITORY` | repository | `terraform -chdir=terraform/envs/dev output -json ecr_repository_names`, the `sample-app` value (e.g. `parallel/sample-app`) |
 | `AWS_APPLY_ROLE_ARN` | `dev` Environment | `terraform -chdir=terraform/bootstrap output -raw terraform_apply_role_arn` |
 
 Create the `dev` Environment under **Settings -> Environments** and add required reviewers. From then on, `terraform apply` runs from CI on merge to `main`.
