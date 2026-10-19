@@ -77,6 +77,10 @@ jobs:
           severity: HIGH,CRITICAL
           exit-code: "1"
           trivyignores: .trivyignore
+          # `terraform init` above downloads modules into .terraform/; their
+          # examples/ folders hold sample manifests that aren't ours. Module code
+          # itself is still scanned.
+          skip-dirs: "**/examples"
 
       - name: Checkov
         run: |

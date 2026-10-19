@@ -35,7 +35,7 @@ lint:
 	tflint --recursive --config $(CURDIR)/.tflint.hcl --chdir terraform
 
 scan:
-	trivy config --severity HIGH,CRITICAL --exit-code 1 terraform
+	trivy config --severity HIGH,CRITICAL --exit-code 1 --ignorefile .trivyignore --skip-dirs '**/examples' terraform
 	checkov --directory terraform --framework terraform --quiet --compact --config-file .checkov.yaml
 
 manifests:

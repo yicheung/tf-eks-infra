@@ -1,3 +1,10 @@
-# Trivy misconfiguration IDs to accept. Each entry needs a justification and
-# should be revisited. Example:
-# AVD-AWS-0104  # egress to 0.0.0.0/0 on node SG: required for NAT egress; filtered by Cilium policy
+# Trivy misconfiguration IDs to accept. Each entry needs a justification and an
+# expiry date (exp:YYYY-MM-DD) so it gets revisited.
+
+# Node security group egress 0.0.0.0/0 (terraform-aws-modules/eks "egress_all").
+# Nodes reach ECR, STS, EKS, GitHub and Helm repos through NAT, and with Cilium
+# ENI mode pod traffic leaves through the same security group, so a narrower
+# rule would break pods. Pod egress is enforced by Cilium/Kubernetes
+# NetworkPolicies (default-deny in tenant namespaces). Tracked as known gap 10
+# (no egress domain allow-listing) in docs/security-controls.md.
+AWS-0104 exp:2027-04-30
