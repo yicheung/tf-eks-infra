@@ -1,0 +1,381 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2920" height="1750" viewBox="0 0 2920 1750" font-family="Inter, &#x27;Segoe UI&#x27;, Helvetica, Arial, sans-serif" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYToxZjAzZjhkZi1jMzNhLTRiYzItYTExMi1kYjdiNGY1YjQxNzUAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaOLIzwPSn8TbD3UHF/Aw/Y8AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpjYTgxNjE2My05Y2E0LTQ5NWItYWZhZS01NDQyMjg4N2JmMzZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoaE99qsvGijL+IWcr8er+BwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggbGeWJizs0NNLFpP7ONIMdZg9z+OIP1J8OLcKNW9g/cSkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaGOsgV1KdkfWFYV516LRvkIAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCCUa9jFwFURZ4Ml3Dyf31znATJnLtgMnSyDXdV78Vp1ZGRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjiZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjFmMDNmOGRmLWMzM2EtNGJjMi1hMTEyLWRiN2I0ZjViNDE3NS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmJjZmQ3ZGFiLWFkMmQtNGJmZC05YzlkLWQ2NTA3NzUxZGI4NHJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCBsZ5YmLOzQ00sWk/s40gx1mD3P44g/Unw4two1b2D9xKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggjkq6MW78iCPExVdME1oHF4O9k9BsQlZWMqCbqbFlpMGiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggXrn6SmT+vFy2r2J5eIArePP6x/+5SOFnDU61D8mf5+50Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQJqW21TlzEAKYmharPs7gZEFocs3GDV8M8j45Fa/dc15yUUND0NYwlN1GnH3MJZf1Fol4o4o76hQtjAJnO63lMw=</c2pa:manifest></metadata>
+<title>tf-eks-infra architecture (envs/dev)</title>
+<defs>
+<marker id="a-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#232F3E"/></marker>
+<marker id="a-supply" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7B42BC"/></marker>
+<marker id="a-inbound" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#147EBA"/></marker>
+<marker id="a-egress" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F8A10"/></marker>
+<marker id="a-cp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8C4FFF"/></marker>
+<marker id="a-image" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07B00"/></marker>
+<marker id="a-logs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E7157B"/></marker>
+<marker id="a-alert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#DD344C"/></marker>
+</defs>
+<rect width="2920" height="1750" fill="#FFFFFF"/>
+<rect x="30" y="110" width="340" height="340" rx="8" fill="#F7F8FA" stroke="#9AA5B1" stroke-width="1.3"/>
+<text x="38.0" y="130.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">GitHub</text>
+<rect x="420" y="100" width="2460" height="1590" rx="8" fill="#FFFFFF" stroke="#232F3E" stroke-width="2"/>
+<text x="428.0" y="123.0" font-size="15" font-weight="600" fill="#232F3E" xml:space="preserve">AWS account 906754897253 · us-east-1</text>
+<rect x="440" y="150" width="320" height="320" rx="8" fill="#F7F8FA" stroke="#9AA5B1" stroke-width="1.3"/>
+<text x="448.0" y="170.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Terraform bootstrap (one-time)</text>
+<rect x="780" y="150" width="520" height="320" rx="8" fill="#F7F8FA" stroke="#9AA5B1" stroke-width="1.3"/>
+<text x="788.0" y="170.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">IAM (roles created by this plan)</text>
+<rect x="1600" y="150" width="400" height="320" rx="8" fill="#F7F8FA" stroke="#9AA5B1" stroke-width="1.3"/>
+<text x="1608.0" y="170.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">CloudWatch Logs</text>
+<rect x="2020" y="150" width="400" height="320" rx="8" fill="#F7F8FA" stroke="#9AA5B1" stroke-width="1.3"/>
+<text x="2028.0" y="170.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Registry &amp; secrets</text>
+<rect x="2440" y="150" width="395" height="320" rx="8" fill="#F7F8FA" stroke="#9AA5B1" stroke-width="1.3"/>
+<text x="2448.0" y="170.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Detection &amp; alerting</text>
+<rect x="440" y="635" width="2390" height="1035" rx="8" fill="#F5FAF2" stroke="#248814" stroke-width="2"/>
+<text x="448.0" y="656.5" font-size="13.5" font-weight="600" fill="#1D6B10" xml:space="preserve">VPC 10.0.0.0/16 · us-east-1a + us-east-1b · flow logs → CloudWatch · default SG / NACL locked down</text>
+<rect x="640" y="680" width="610" height="110" rx="8" fill="#E9F4DA" stroke="#7AA116" stroke-width="1.3"/>
+<rect x="460" y="890" width="2355" height="765" rx="8" fill="#E6F1FA" stroke="#147EBA" stroke-width="1.3"/>
+<text x="1548.0" y="910.0" font-size="12" font-weight="600" fill="#0E5A86" xml:space="preserve">Private subnets · 10.0.0.0/19 (1a) · 10.0.32.0/19 (1b) · default route → NAT</text>
+<rect x="480" y="930" width="2330" height="710" rx="8" fill="#FFFFFF" stroke="#326CE5" stroke-width="1.3" stroke-dasharray="6 4"/>
+<text x="808.0" y="950.5" font-size="12.5" font-weight="600" fill="#1E4DB7" xml:space="preserve">EKS managed node group “system” · 2 × m7i.large (min 2, max 4) · Bottlerocket · IMDSv2 hop limit 1 · no SSH · pods get VPC IPs (Cilium ENI)</text>
+<rect x="30" y="815" width="340" height="875" rx="8" fill="#F7F8FA" stroke="#9AA5B1" stroke-width="1.3"/>
+<text x="38.0" y="835.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Legend</text>
+<text x="38.0" y="48.0" font-size="22" font-weight="600" fill="#232F3E" xml:space="preserve">tf-eks-infra · secure EKS reference platform · envs/dev (project parallel, cluster parallel-dev)</text>
+<text x="38.0" y="75.5" font-size="12.5" font-weight="400" fill="#2B3440" xml:space="preserve">Built from terraform plan: 130 resources to add (+ the one-time bootstrap stack). Everything inside the orange-bordered boxes is deployed afterwards by Argo CD from Git.</text>
+<rect x="45" y="145" width="310" height="120" rx="8" fill="#F3F4F6" stroke="#6B7280" stroke-width="1.3"/>
+<text x="53.0" y="165.5" font-size="12.5" font-weight="600" fill="#374151" xml:space="preserve">Repository yicheung/tf-eks-infra</text>
+<text x="53.0" y="184.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">terraform/ · platform/ · policies/</text>
+<text x="53.0" y="200.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">workloads/ · app/sample</text>
+<text x="53.0" y="215.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Single source of truth for Argo CD</text>
+<rect x="45" y="280" width="310" height="155" rx="8" fill="#F3F4F6" stroke="#6B7280" stroke-width="1.3"/>
+<text x="53.0" y="300.5" font-size="12.5" font-weight="600" fill="#374151" xml:space="preserve">GitHub Actions</text>
+<text x="53.0" y="319.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">terraform: fmt, validate, test, plan</text>
+<text x="53.0" y="335.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">image: Trivy gate, Syft SBOM,</text>
+<text x="53.0" y="350.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  cosign keyless sign, SLSA provenance</text>
+<text x="53.0" y="366.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">manifests: kubeconform, Kyverno CLI</text>
+<text x="53.0" y="381.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">AWS access via OIDC (no stored keys)</text>
+<rect x="30" y="480" width="340" height="125" rx="8" fill="#F3F4F6" stroke="#6B7280" stroke-width="1.3"/>
+<text x="38.0" y="500.5" font-size="12.5" font-weight="600" fill="#374151" xml:space="preserve">Admin workstation</text>
+<text x="38.0" y="519.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Source IP 108.41.8.224/32</text>
+<text x="38.0" y="535.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">IAM user yicheung / terraform-apply role</text>
+<text x="38.0" y="550.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">terraform · kubectl · port-forward</text>
+<text x="38.0" y="566.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">(move to an MFA admin role: audit)</text>
+<rect x="30" y="690" width="340" height="95" rx="8" fill="#F3F4F6" stroke="#6B7280" stroke-width="1.3"/>
+<text x="38.0" y="710.5" font-size="12.5" font-weight="600" fill="#374151" xml:space="preserve">Internet</text>
+<text x="38.0" y="729.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Clients → HTTPS to the shared Gateway</text>
+<text x="38.0" y="745.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Outbound targets: GitHub, Helm repos,</text>
+<text x="38.0" y="760.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">public images (via NAT)</text>
+<rect x="2440" y="14" width="400" height="70" rx="8" fill="#F3F4F6" stroke="#6B7280" stroke-width="1.3"/>
+<text x="2448.0" y="34.5" font-size="12.5" font-weight="600" fill="#374151" xml:space="preserve">Alert recipients (email)</text>
+<text x="2448.0" y="53.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">security_alert_emails: subscribed</text>
+<text x="2448.0" y="69.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">platform_alert_emails: not set yet</text>
+<rect x="455" y="185" width="290" height="120" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="463.0" y="205.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">S3 state bucket</text>
+<text x="463.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">tf-eks-infra-tfstate-906754897253-</text>
+<text x="463.0" y="240.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">us-east-1 · versioned · KMS</text>
+<text x="463.0" y="255.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">keys: bootstrap/, envs/dev/</text>
+<text x="463.0" y="271.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">S3-native lock (use_lockfile)</text>
+<rect x="455" y="315" width="290" height="140" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="463.0" y="335.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">OIDC + CI roles (16 resources)</text>
+<text x="463.0" y="354.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">GitHub OIDC provider</text>
+<text x="463.0" y="370.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">terraform-plan (ReadOnlyAccess)</text>
+<text x="463.0" y="385.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">terraform-apply (AdministratorAccess)</text>
+<text x="463.0" y="401.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">KMS key for state</text>
+<text x="463.0" y="416.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">State is local until migrated</text>
+<rect x="795" y="185" width="240" height="130" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="803.0" y="205.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">EKS roles</text>
+<text x="803.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">cluster role + KMS policy</text>
+<text x="803.0" y="240.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">node role: WorkerNode, ECR RO,</text>
+<text x="803.0" y="255.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  EKS_CNI_Policy (unused: M5)</text>
+<text x="803.0" y="271.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">VPC flow-log role</text>
+<rect x="1045" y="185" width="240" height="130" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="1053.0" y="205.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">CI</text>
+<text x="1053.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ci-push role (GitHub OIDC)</text>
+<text x="1053.0" y="240.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">push to parallel/* only</text>
+<text x="1053.0" y="255.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">trust: main branch of this repo</text>
+<rect x="795" y="325" width="490" height="130" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="803.0" y="345.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">EKS Pod Identity roles (one per ServiceAccount)</text>
+<text x="803.0" y="364.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">cilium-operator</text>
+<text x="803.0" y="380.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">aws-load-balancer-controller</text>
+<text x="803.0" y="395.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">external-secrets</text>
+<text x="803.0" y="411.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">falcosidekick</text>
+<text x="1040.0" y="364.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">kyverno-admission</text>
+<text x="1040.0" y="380.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">alertmanager</text>
+<text x="1040.0" y="395.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ebs-csi-controller</text>
+<text x="1040.0" y="411.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">cloudwatch-agent</text>
+<rect x="1320" y="150" width="260" height="320" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="1328.0" y="170.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">KMS keys (customer-managed)</text>
+<text x="1328.0" y="189.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">EKS secrets (envelope)</text>
+<text x="1328.0" y="205.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">CloudWatch logs</text>
+<text x="1328.0" y="220.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">EBS volumes</text>
+<text x="1328.0" y="236.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ECR repository</text>
+<text x="1328.0" y="251.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">SNS security-alerts</text>
+<text x="1328.0" y="266.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">SNS platform-alerts</text>
+<text x="1328.0" y="297.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">EBS encryption by default</text>
+<text x="1328.0" y="313.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">(account-wide in us-east-1)</text>
+<rect x="1615" y="185" width="370" height="95" rx="8" fill="#FCEAF3" stroke="#E7157B" stroke-width="1.3"/>
+<text x="1623.0" y="205.5" font-size="12.5" font-weight="600" fill="#9C0F53" xml:space="preserve">/aws/eks/parallel-dev/cluster</text>
+<text x="1623.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">api · audit · authenticator ·</text>
+<text x="1623.0" y="240.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">controllerManager · scheduler · 365 d · KMS</text>
+<rect x="1615" y="290" width="370" height="70" rx="8" fill="#FCEAF3" stroke="#E7157B" stroke-width="1.3"/>
+<text x="1623.0" y="310.5" font-size="12.5" font-weight="600" fill="#9C0F53" xml:space="preserve">VPC flow logs</text>
+<text x="1623.0" y="329.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">all traffic · 365 d · KMS</text>
+<rect x="1615" y="370" width="370" height="85" rx="8" fill="#FCEAF3" stroke="#E7157B" stroke-width="1.3"/>
+<text x="1623.0" y="390.5" font-size="12.5" font-weight="600" fill="#9C0F53" xml:space="preserve">Container Insights + container logs</text>
+<text x="1623.0" y="409.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">CloudWatch Observability add-on</text>
+<text x="1623.0" y="425.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">(add-on-created log groups: audit L3)</text>
+<rect x="2035" y="185" width="180" height="270" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="2043.0" y="205.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">Secrets Manager</text>
+<text x="2043.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">parallel-dev/*</text>
+<text x="2043.0" y="255.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">read by External</text>
+<text x="2043.0" y="271.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Secrets via Pod</text>
+<text x="2043.0" y="286.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Identity</text>
+<rect x="2230" y="185" width="175" height="270" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="2238.0" y="205.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Amazon ECR</text>
+<text x="2238.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">parallel/sample-app</text>
+<text x="2238.0" y="240.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">immutable tags</text>
+<text x="2238.0" y="255.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">KMS · lifecycle</text>
+<text x="2238.0" y="271.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">enhanced scanning</text>
+<text x="2238.0" y="286.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">(Inspector)</text>
+<text x="2238.0" y="317.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">signatures, SBOM,</text>
+<text x="2238.0" y="332.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">provenance by digest</text>
+<rect x="2455" y="185" width="180" height="115" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="2463.0" y="205.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">GuardDuty</text>
+<text x="2463.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">detector</text>
+<text x="2463.0" y="240.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">EKS audit-log monitoring</text>
+<text x="2463.0" y="255.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Runtime Monitoring</text>
+<rect x="2455" y="320" width="180" height="135" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="2463.0" y="340.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">EventBridge rule</text>
+<text x="2463.0" y="359.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">GuardDuty findings</text>
+<text x="2463.0" y="375.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">→ SNS security-alerts</text>
+<rect x="2645" y="185" width="175" height="115" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="2653.0" y="205.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">SNS security-alerts</text>
+<text x="2653.0" y="224.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">KMS · topic policy</text>
+<text x="2653.0" y="240.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">email subscription</text>
+<rect x="2645" y="320" width="175" height="135" rx="8" fill="#FFF8E1" stroke="#C98A00" stroke-width="1.3" stroke-dasharray="6 4"/>
+<text x="2653.0" y="340.5" font-size="12.5" font-weight="600" fill="#7A5300" xml:space="preserve">SNS platform-alerts</text>
+<text x="2653.0" y="359.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">KMS · from Alertmanager</text>
+<text x="2653.0" y="375.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">no subscriber yet:</text>
+<text x="2653.0" y="390.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">set platform_alert_</text>
+<text x="2653.0" y="406.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">emails in tfvars</text>
+<rect x="440" y="490" width="1420" height="120" rx="8" fill="#FFF4E0" stroke="#E07B00" stroke-width="1.3"/>
+<text x="448.0" y="510.5" font-size="12.5" font-weight="600" fill="#8A4B00" xml:space="preserve">Amazon EKS control plane · parallel-dev · Kubernetes 1.36 (AWS-managed VPC)</text>
+<text x="448.0" y="529.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">API endpoint: public, restricted to 108.41.8.224/32, plus private · Secrets envelope-encrypted with KMS</text>
+<text x="448.0" y="545.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Access entries (API mode, no creator admin): terraform-apply role, user/yicheung → AmazonEKSClusterAdminPolicy</text>
+<text x="448.0" y="560.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">bootstrap_self_managed_addons = false (no VPC CNI, no kube-proxy) · logs → CloudWatch · GuardDuty reads the audit stream</text>
+<text x="448.0" y="576.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Managed add-ons: eks-pod-identity-agent · coredns · aws-ebs-csi-driver · amazon-cloudwatch-observability</text>
+<rect x="460" y="700" width="150" height="70" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="468.0" y="720.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Internet gateway</text>
+<text x="808.0" y="787.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Public · us-east-1a · 10.0.96.0/24</text>
+<rect x="660" y="700" width="240" height="60" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="668.0" y="720.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Network Load Balancer</text>
+<text x="668.0" y="739.2" font-size="10.5" font-weight="400" fill="#2B3440" xml:space="preserve">internet-facing · created by LB ctrl</text>
+<rect x="920" y="700" width="240" height="60" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="928.0" y="720.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">NAT gateway + Elastic IP</text>
+<text x="928.0" y="739.2" font-size="10.5" font-weight="400" fill="#2B3440" xml:space="preserve">single NAT for the dev VPC</text>
+<rect x="1270" y="680" width="610" height="110" rx="8" fill="#E9F4DA" stroke="#7AA116" stroke-width="1.3"/>
+<text x="1278.0" y="699.5" font-size="11.5" font-weight="600" fill="#4A6B0A" xml:space="preserve">Public · us-east-1b · 10.0.97.0/24</text>
+<text x="1278.0" y="718.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">NLB zone 1b · no NAT here (dev uses one NAT gateway)</text>
+<rect x="2140" y="680" width="330" height="70" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="2148.0" y="700.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">S3 gateway endpoint</text>
+<text x="2148.0" y="719.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">image layers and S3 traffic skip the NAT</text>
+<rect x="2490" y="680" width="325" height="70" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="2498.0" y="700.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">EBS gp3 volumes (KMS)</text>
+<text x="2498.0" y="719.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Prometheus 50 Gi · Alertmanager 5 Gi</text>
+<rect x="1150" y="810" width="730" height="60" rx="8" fill="#EFE9FF" stroke="#8C4FFF" stroke-width="1.3"/>
+<text x="1158.0" y="829.5" font-size="11.5" font-weight="600" fill="#5B2DB8" xml:space="preserve">Intra subnets · 10.0.104.0/24 (1a) · 10.0.105.0/24 (1b) · no internet route</text>
+<text x="1158.0" y="848.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">EKS control-plane ENIs ↔ nodes: 443, kubelet 10250, admission webhooks</text>
+<rect x="2140" y="765" width="675" height="105" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="2148.0" y="785.5" font-size="12.5" font-weight="600" fill="#A3182C" xml:space="preserve">Security groups</text>
+<text x="2148.0" y="804.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">cluster SG: 443 from nodes</text>
+<text x="2148.0" y="820.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">node SG (13 rules):</text>
+<text x="2148.0" y="835.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  webhooks 4443/6443/8443/9443/10251</text>
+<text x="2477.5" y="804.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  kubelet 10250, CoreDNS 53 tcp/udp</text>
+<text x="2477.5" y="820.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  Cilium WireGuard + health ICMP</text>
+<text x="2477.5" y="835.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  node ↔ node ephemeral, egress all</text>
+<text x="818.0" y="985.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Installed by Terraform (helm_release / EKS add-on)</text>
+<rect x="500" y="990" width="260" height="160" rx="8" fill="#F2ECFA" stroke="#7B42BC" stroke-width="1.3"/>
+<text x="508.0" y="1010.5" font-size="12.5" font-weight="600" fill="#5A2D91" xml:space="preserve">EKS add-ons</text>
+<text x="508.0" y="1029.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">eks-pod-identity-agent</text>
+<text x="508.0" y="1045.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">coredns</text>
+<text x="508.0" y="1060.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">aws-ebs-csi-driver</text>
+<text x="508.0" y="1076.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  (Pod Identity, KMS)</text>
+<text x="508.0" y="1091.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">amazon-cloudwatch-</text>
+<text x="508.0" y="1106.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  observability</text>
+<rect x="810" y="990" width="776" height="160" rx="8" fill="#F2ECFA" stroke="#7B42BC" stroke-width="1.3"/>
+<text x="818.0" y="1010.5" font-size="12.5" font-weight="600" fill="#5A2D91" xml:space="preserve">Cilium 1.20.3 · kube-system</text>
+<text x="818.0" y="1029.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ENI IPAM + kube-proxy replacement (eBPF)</text>
+<text x="818.0" y="1045.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">WireGuard pod-to-pod encryption</text>
+<text x="818.0" y="1060.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Hubble relay + flow metrics</text>
+<text x="818.0" y="1076.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Gateway API implementation (CRDs v1.6.3, vendored chart)</text>
+<text x="818.0" y="1091.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">operator: Pod Identity role for ENI management</text>
+<rect x="1606" y="990" width="378" height="160" rx="8" fill="#F2ECFA" stroke="#7B42BC" stroke-width="1.3"/>
+<text x="1614.0" y="1010.5" font-size="12.5" font-weight="600" fill="#5A2D91" xml:space="preserve">Argo CD 10.10.5 · argocd</text>
+<text x="1614.0" y="1029.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">root app-of-apps (argocd-apps 2.0.6)</text>
+<text x="1614.0" y="1045.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">AppProjects: platform vs app-* teams</text>
+<text x="1614.0" y="1060.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">UI: port-forward only</text>
+<text x="1614.0" y="1076.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">syncs platform/, policies/, workloads/</text>
+<rect x="2004" y="990" width="776" height="160" rx="8" fill="#FFFFFF" stroke="#326CE5" stroke-width="1.3" stroke-dasharray="6 4"/>
+<text x="2012.0" y="1010.5" font-size="12.5" font-weight="600" fill="#1E4DB7" xml:space="preserve">Bottlerocket worker nodes</text>
+<text x="2012.0" y="1029.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">SELinux enforcing · immutable root · admin container via SSM</text>
+<text x="2012.0" y="1045.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">launch template: IMDSv2 required, hop limit 1, encrypted root volume</text>
+<text x="2012.0" y="1060.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">GuardDuty runtime agent (amazon-guardduty namespace)</text>
+<text x="2012.0" y="1076.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">host-network pods: Cilium, Falco, node-exporter</text>
+<text x="818.0" y="1185.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Deployed by Argo CD from Git (sync waves −1 → 3)</text>
+<rect x="500" y="1190" width="290" height="210" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="508.0" y="1210.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">gateway-system · wave 2</text>
+<text x="508.0" y="1229.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">shared Gateway (Cilium)</text>
+<text x="508.0" y="1245.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">HTTP → HTTPS redirect</text>
+<text x="508.0" y="1260.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">TLS: wildcard certificate</text>
+<text x="508.0" y="1276.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  via cert-manager</text>
+<text x="508.0" y="1291.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  (when a domain is set)</text>
+<text x="508.0" y="1306.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">the only way in for apps</text>
+<rect x="810" y="1190" width="378" height="210" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="818.0" y="1210.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">cert-manager · wave 0</text>
+<text x="818.0" y="1229.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ClusterIssuer letsencrypt (DNS-01)</text>
+<text x="818.0" y="1245.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Gateway API support</text>
+<text x="818.0" y="1260.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Route 53 access only when</text>
+<text x="818.0" y="1276.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  a domain is configured</text>
+<rect x="1208" y="1190" width="378" height="210" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="1216.0" y="1210.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">external-secrets · wave 0</text>
+<text x="1216.0" y="1229.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ClusterSecretStore cloud-secrets</text>
+<text x="1216.0" y="1245.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  → Secrets Manager parallel-dev/*</text>
+<text x="1216.0" y="1260.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Password generator → grafana-admin</text>
+<text x="1216.0" y="1276.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Pod Identity role</text>
+<text x="1216.0" y="1306.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">shared store: audit finding H2</text>
+<rect x="1606" y="1190" width="378" height="210" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="1614.0" y="1210.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">kyverno · wave 0</text>
+<text x="1614.0" y="1229.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">admission ×3 · background ×2</text>
+<text x="1614.0" y="1245.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">cleanup ×2 · reports ×2</text>
+<text x="1614.0" y="1260.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">verifies cosign signatures in ECR</text>
+<text x="1614.0" y="1276.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  (Pod Identity: ECR read)</text>
+<text x="1614.0" y="1291.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">generates default-deny NetworkPolicies</text>
+<rect x="2004" y="1190" width="776" height="210" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="2012.0" y="1210.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">monitoring · wave −1 (CRDs), wave 2 (stack)</text>
+<text x="2012.0" y="1229.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">prometheus-operator-crds 32.0.1 → kube-prometheus-stack 92.10.1</text>
+<text x="2012.0" y="1245.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Prometheus (15 d, 50 Gi) · Alertmanager (5 Gi) · Grafana (port-forward only)</text>
+<text x="2012.0" y="1260.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">node-exporter · kube-state-metrics · ServiceMonitors for every chart</text>
+<text x="2012.0" y="1276.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">StorageClass gp3-encrypted → EBS volumes (KMS)</text>
+<text x="2012.0" y="1291.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">PrometheusRule platform-security (8 security alerts)</text>
+<text x="2012.0" y="1306.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Alertmanager → SNS platform-alerts (Pod Identity, SigV4)</text>
+<rect x="500" y="1420" width="290" height="200" rx="8" fill="#E7F6EC" stroke="#1E8E3E" stroke-width="1.3"/>
+<text x="508.0" y="1440.5" font-size="12.5" font-weight="600" fill="#146C2E" xml:space="preserve">app-sample · wave 3</text>
+<text x="508.0" y="1459.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">sample-app (Go, distroless)</text>
+<text x="508.0" y="1475.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">PSA restricted</text>
+<text x="508.0" y="1490.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">default-deny + DNS egress</text>
+<text x="508.0" y="1506.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">signed, digest-pinned image</text>
+<text x="508.0" y="1521.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  from ECR parallel/sample-app</text>
+<text x="508.0" y="1536.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">HTTPRoute on the shared</text>
+<text x="508.0" y="1552.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  Gateway</text>
+<rect x="810" y="1420" width="378" height="200" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="818.0" y="1440.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">policies (Kyverno CEL) · wave 2</text>
+<text x="818.0" y="1459.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">tenant-namespace-psa-restricted</text>
+<text x="818.0" y="1475.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">require-hardened-containers</text>
+<text x="818.0" y="1490.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">restrict-image-source</text>
+<text x="818.0" y="1506.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">verify-image-signatures</text>
+<text x="818.0" y="1521.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">tenant-default-deny (generate)</text>
+<text x="818.0" y="1536.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">restrict-service-exposure</text>
+<rect x="1208" y="1420" width="378" height="200" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="1216.0" y="1440.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">Cluster config (root chart)</text>
+<text x="1216.0" y="1459.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">AppProject default (locked down)</text>
+<text x="1216.0" y="1475.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ClusterSecretStore cloud-secrets</text>
+<text x="1216.0" y="1490.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">ClusterIssuer letsencrypt</text>
+<text x="1216.0" y="1506.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">monitoring namespace + StorageClass</text>
+<text x="1216.0" y="1521.5" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">grafana-admin ExternalSecret</text>
+<rect x="1606" y="1420" width="378" height="200" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="1614.0" y="1440.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">aws-load-balancer-controller · wave 0</text>
+<text x="1614.0" y="1459.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">kube-system · Pod Identity role</text>
+<text x="1614.0" y="1475.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">provisions the NLB for the</text>
+<text x="1614.0" y="1490.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">  shared Gateway Service</text>
+<rect x="2004" y="1420" width="776" height="200" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="2012.0" y="1440.5" font-size="12.5" font-weight="600" fill="#A6461A" xml:space="preserve">falco · wave 1</text>
+<text x="2012.0" y="1459.9" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Falco DaemonSet (modern eBPF) on every node</text>
+<text x="2012.0" y="1475.3" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Falcosidekick ×2 → SNS security-alerts (Pod Identity, priority ≥ error)</text>
+<text x="2012.0" y="1490.7" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">metrics → Prometheus · dashboards → Grafana</text>
+<text x="2012.0" y="1506.1" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">rules: shells in containers, sensitive file reads, privilege changes</text>
+<rect x="45" y="850" width="26" height="16" rx="8" fill="#FFFFFF" stroke="#545B64" stroke-width="1.3"/>
+<text x="88.0" y="867.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">AWS service</text>
+<rect x="45" y="874" width="26" height="16" rx="8" fill="#FDEDEF" stroke="#DD344C" stroke-width="1.3"/>
+<text x="88.0" y="891.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Security / identity service</text>
+<rect x="45" y="898" width="26" height="16" rx="8" fill="#FCEAF3" stroke="#E7157B" stroke-width="1.3"/>
+<text x="88.0" y="915.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Logging</text>
+<rect x="45" y="922" width="26" height="16" rx="8" fill="#FFF4E0" stroke="#E07B00" stroke-width="1.3"/>
+<text x="88.0" y="939.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">EKS control plane (AWS-managed)</text>
+<rect x="45" y="946" width="26" height="16" rx="8" fill="#F2ECFA" stroke="#7B42BC" stroke-width="1.3"/>
+<text x="88.0" y="963.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Installed by Terraform</text>
+<rect x="45" y="970" width="26" height="16" rx="8" fill="#FDEFE7" stroke="#E96D33" stroke-width="1.3"/>
+<text x="88.0" y="987.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Deployed by Argo CD</text>
+<rect x="45" y="994" width="26" height="16" rx="8" fill="#E7F6EC" stroke="#1E8E3E" stroke-width="1.3"/>
+<text x="88.0" y="1011.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Tenant workload</text>
+<rect x="45" y="1018" width="26" height="16" rx="8" fill="#F3F4F6" stroke="#6B7280" stroke-width="1.3"/>
+<text x="88.0" y="1035.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Outside AWS</text>
+<rect x="45" y="1042" width="26" height="16" rx="8" fill="#FFF8E1" stroke="#C98A00" stroke-width="1.3" stroke-dasharray="6 4"/>
+<text x="88.0" y="1059.5" font-size="11.5" font-weight="600" fill="#232F3E" xml:space="preserve">Needs action</text>
+<text x="53.0" y="1095.5" font-size="12.5" font-weight="600" fill="#232F3E" xml:space="preserve">Flows</text>
+<text x="82.0" y="1123.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Admin → EKS API (public endpoint, /32</text>
+<text x="82.0" y="1138.8" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">only)</text>
+<text x="82.0" y="1165.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">terraform apply → state in S3 (lockfile)</text>
+<text x="82.0" y="1191.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">CI → OIDC → ci-push role → ECR: signed</text>
+<text x="82.0" y="1206.8" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">image, SBOM, SLSA provenance</text>
+<text x="82.0" y="1233.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Internet ↔ internet gateway</text>
+<text x="82.0" y="1259.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">HTTPS in: IGW → NLB → shared Gateway</text>
+<text x="82.0" y="1285.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Gateway → tenant app (HTTPRoute)</text>
+<text x="82.0" y="1311.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Egress: nodes → NAT → IGW (Git, Helm</text>
+<text x="82.0" y="1326.8" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">charts, public images)</text>
+<text x="82.0" y="1353.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Control plane ↔ nodes through</text>
+<text x="82.0" y="1368.8" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">intra-subnet ENIs</text>
+<text x="82.0" y="1395.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Image pulls: ECR → nodes (layers via S3</text>
+<text x="82.0" y="1410.8" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">endpoint); Kyverno checks signatures</text>
+<text x="82.0" y="1437.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Control-plane, flow and container logs →</text>
+<text x="82.0" y="1452.8" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">CloudWatch</text>
+<text x="82.0" y="1479.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Falcosidekick → SNS security-alerts</text>
+<text x="82.0" y="1505.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Alertmanager → SNS platform-alerts</text>
+<text x="82.0" y="1531.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">GuardDuty finding → EventBridge → SNS</text>
+<text x="82.0" y="1546.8" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">security-alerts</text>
+<text x="82.0" y="1573.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">SNS security-alerts → email</text>
+<text x="38.0" y="1727.4" font-size="11" font-weight="400" fill="#2B3440" xml:space="preserve">Not shown as boxes: route tables and associations, EKS access-policy associations, IAM policy attachments, KMS aliases, ECR lifecycle policy, SNS topic policy, ec2 tags, time_sleep. Every resource is tagged Project / Environment / Owner / ManagedBy / Repository. Source: docs/architecture/generate_diagram.py.</text>
+<polyline points="370,550 440,550" fill="none" stroke="#232F3E" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-admin)"/>
+<polyline points="370,505 395,505 395,245 455,245" fill="none" stroke="#232F3E" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-admin)"/>
+<polyline points="355,330 382,330 382,90 2318,90 2318,185" fill="none" stroke="#7B42BC" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-supply)"/>
+<polyline points="370,735 460,735" fill="none" stroke="#147EBA" stroke-width="2" stroke-linejoin="round" marker-start="url(#a-inbound)" marker-end="url(#a-inbound)"/>
+<polyline points="610,730 660,730" fill="none" stroke="#147EBA" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-inbound)"/>
+<polyline points="780,760 780,1190" fill="none" stroke="#147EBA" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-inbound)"/>
+<polyline points="645,1400 645,1420" fill="none" stroke="#147EBA" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-inbound)"/>
+<polyline points="1120,930 1120,760" fill="none" stroke="#4F8A10" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-egress)"/>
+<polyline points="1040,700 1040,690 535,690 535,700" fill="none" stroke="#4F8A10" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-egress)"/>
+<polyline points="1260,610 1260,810" fill="none" stroke="#8C4FFF" stroke-width="2" stroke-linejoin="round" marker-start="url(#a-cp)" marker-end="url(#a-cp)"/>
+<polyline points="1500,870 1500,930" fill="none" stroke="#8C4FFF" stroke-width="2" stroke-linejoin="round" marker-start="url(#a-cp)" marker-end="url(#a-cp)"/>
+<polyline points="2318,455 2318,480 2100,480 2100,930" fill="none" stroke="#E07B00" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-image)"/>
+<polyline points="1800,490 1800,455" fill="none" stroke="#E7157B" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-logs)"/>
+<polyline points="2780,1530 2862,1530 2862,243 2820,243" fill="none" stroke="#DD344C" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-alert)"/>
+<polyline points="2780,1300 2848,1300 2848,390 2820,390" fill="none" stroke="#DD344C" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-alert)"/>
+<polyline points="2545,300 2545,320" fill="none" stroke="#DD344C" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-alert)"/>
+<polyline points="2635,390 2640,390 2640,270 2645,270" fill="none" stroke="#DD344C" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-alert)"/>
+<polyline points="2732,185 2732,84" fill="none" stroke="#DD344C" stroke-width="2" stroke-linejoin="round" marker-end="url(#a-alert)"/>
+<g><circle cx="405" cy="532" r="11" fill="#232F3E" stroke="#FFFFFF" stroke-width="2"/><text x="405" y="536" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">1</text></g>
+<g><circle cx="395.0" cy="375.0" r="11" fill="#232F3E" stroke="#FFFFFF" stroke-width="2"/><text x="395.0" y="379.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">2</text></g>
+<g><circle cx="1350.0" cy="90.0" r="11" fill="#7B42BC" stroke="#FFFFFF" stroke-width="2"/><text x="1350.0" y="94.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">3</text></g>
+<g><circle cx="415" cy="717" r="11" fill="#147EBA" stroke="#FFFFFF" stroke-width="2"/><text x="415" y="721" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">4</text></g>
+<g><circle cx="635" cy="712" r="11" fill="#147EBA" stroke="#FFFFFF" stroke-width="2"/><text x="635" y="716" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">5</text></g>
+<g><circle cx="780.0" cy="975.0" r="11" fill="#147EBA" stroke="#FFFFFF" stroke-width="2"/><text x="780.0" y="979.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">5</text></g>
+<g><circle cx="668" cy="1410" r="11" fill="#147EBA" stroke="#FFFFFF" stroke-width="2"/><text x="668" y="1414" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">6</text></g>
+<g><circle cx="1120.0" cy="845.0" r="11" fill="#4F8A10" stroke="#FFFFFF" stroke-width="2"/><text x="1120.0" y="849.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">7</text></g>
+<g><circle cx="787.5" cy="690.0" r="11" fill="#4F8A10" stroke="#FFFFFF" stroke-width="2"/><text x="787.5" y="694.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">7</text></g>
+<g><circle cx="1260.0" cy="710.0" r="11" fill="#8C4FFF" stroke="#FFFFFF" stroke-width="2"/><text x="1260.0" y="714.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">8</text></g>
+<g><circle cx="1522" cy="900" r="11" fill="#8C4FFF" stroke="#FFFFFF" stroke-width="2"/><text x="1522" y="904" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">8</text></g>
+<g><circle cx="2100.0" cy="705.0" r="11" fill="#E07B00" stroke="#FFFFFF" stroke-width="2"/><text x="2100.0" y="709.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">9</text></g>
+<g><circle cx="1822" cy="474" r="11" fill="#E7157B" stroke="#FFFFFF" stroke-width="2"/><text x="1822" y="478" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">10</text></g>
+<g><circle cx="2862.0" cy="886.5" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="2862.0" y="890.5" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">11</text></g>
+<g><circle cx="2848.0" cy="845.0" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="2848.0" y="849.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">12</text></g>
+<g><circle cx="2568" cy="310" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="2568" y="314" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">13</text></g>
+<g><circle cx="2625" cy="300" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="2625" y="304" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">13</text></g>
+<g><circle cx="2732.0" cy="134.5" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="2732.0" y="138.5" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">14</text></g>
+<g><circle cx="56.0" cy="1114.0" r="11" fill="#232F3E" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1118.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">1</text></g>
+<g><circle cx="56.0" cy="1156.0" r="11" fill="#232F3E" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1160.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">2</text></g>
+<g><circle cx="56.0" cy="1182.0" r="11" fill="#7B42BC" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1186.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">3</text></g>
+<g><circle cx="56.0" cy="1224.0" r="11" fill="#147EBA" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1228.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">4</text></g>
+<g><circle cx="56.0" cy="1250.0" r="11" fill="#147EBA" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1254.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">5</text></g>
+<g><circle cx="56.0" cy="1276.0" r="11" fill="#147EBA" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1280.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">6</text></g>
+<g><circle cx="56.0" cy="1302.0" r="11" fill="#4F8A10" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1306.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">7</text></g>
+<g><circle cx="56.0" cy="1344.0" r="11" fill="#8C4FFF" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1348.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">8</text></g>
+<g><circle cx="56.0" cy="1386.0" r="11" fill="#E07B00" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1390.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">9</text></g>
+<g><circle cx="56.0" cy="1428.0" r="11" fill="#E7157B" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1432.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">10</text></g>
+<g><circle cx="56.0" cy="1470.0" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1474.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">11</text></g>
+<g><circle cx="56.0" cy="1496.0" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1500.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">12</text></g>
+<g><circle cx="56.0" cy="1522.0" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1526.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">13</text></g>
+<g><circle cx="56.0" cy="1564.0" r="11" fill="#DD344C" stroke="#FFFFFF" stroke-width="2"/><text x="56.0" y="1568.0" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">14</text></g>
+</svg>

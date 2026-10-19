@@ -51,6 +51,8 @@ flowchart LR
   EKS --> cw
 ```
 
+Full resource-level diagram (SVG, draw.io, Visio): **[docs/architecture](docs/architecture/README.md)**.
+
 **Split of responsibility:** Terraform owns everything that touches the cloud API: the network, the cluster, IAM, KMS, the registry, GuardDuty, and the CNI (since nothing runs without one). It then installs Argo CD and a single root Application. Everything inside the cluster after that comes from Git (`platform/`, `policies/`, `workloads/`).
 
 ## Repository layout
