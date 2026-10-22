@@ -15,6 +15,7 @@ locals {
     Environment = var.environment
     ManagedBy   = "terraform"
     Repository  = var.github_repository
+    Owner       = var.owner
   }
 
   cluster_admin_entries = {

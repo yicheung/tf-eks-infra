@@ -96,6 +96,10 @@ resource "helm_release" "cilium" {
     k8sServiceHost       = local.k8s_service_host
     k8sServicePort       = 443
 
+    # The agent reads config written once by an init container. Without this,
+    # a ConfigMap change leaves the existing pods on the old config.
+    rollOutCiliumPods = true
+
     # ENI mode: pods get VPC-routable IPs, so the EKS control plane can reach
     # admission webhooks (Kyverno, cert-manager, ESO) without hostNetwork.
     eni = {
@@ -105,7 +109,11 @@ resource "helm_release" "cilium" {
     ipam                  = { mode = "eni" }
     routingMode           = "native"
     ipv4NativeRoutingCIDR = var.vpc_cidr
-    bpf                   = { masquerade = true }
+    # ENI mode turns IPv4 masquerade off, and IPv6 is disabled, so BPF
+    # masquerade has no family to use and the agent exits. Traffic inside
+    # ipv4NativeRoutingCIDR stays native-routed; everything else is masqueraded.
+    enableIPv4Masquerade = true
+    bpf                  = { masquerade = true }
 
     # --- Transparent encryption between nodes (pod-to-pod) --------------------
     encryption = {

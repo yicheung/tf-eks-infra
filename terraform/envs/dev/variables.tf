@@ -4,6 +4,12 @@ variable "project" {
   default     = "tf-eks-infra"
 }
 
+variable "owner" {
+  description = "Owner of the project"
+  type        = string
+  default     = "admin"
+}
+
 variable "environment" {
   description = "Environment name."
   type        = string

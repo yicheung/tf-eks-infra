@@ -15,6 +15,7 @@ terraform.rc
 # tfvars here hold no secrets (ARNs, CIDRs) and are committed so CI can plan.
 # Anything sensitive goes in *.secret.tfvars or GitHub/AWS secrets.
 *.secret.tfvars
+.tmp/
 
 # Tooling
 .bin/
